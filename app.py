@@ -49,11 +49,11 @@ def _session_key():
     path = directory / '.session-key'
     try:
         fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
-        with os.fdopen(fd, 'w') as handle:
+        with os.fdopen(fd, 'w', encoding='utf-8') as handle:
             handle.write(secrets.token_hex(32))
     except FileExistsError:
         pass
-    return path.read_text().strip()
+    return path.read_text(encoding='utf-8').strip()
 
 
 app.secret_key = _session_key()

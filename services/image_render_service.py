@@ -28,6 +28,17 @@ LINE_SPACING = 1.8
 
 # Optional project font first, then Chinese fonts on common operating systems.
 _PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+# Windows is not always installed on C:, so resolve its font directory from
+# WINDIR rather than hard-coding C:/Windows/Fonts. Off Windows this stays a
+# relative path that never exists, which keeps the list importable everywhere.
+_WINDOWS_FONTS = Path(os.environ.get("WINDIR", r"C:\Windows")) / "Fonts"
+
+
+def _windows_font(name: str) -> str:
+    return str(_WINDOWS_FONTS / name)
+
+
 FONT_PATHS = [
     str(_PROJECT_ROOT / "static/fonts/NotoSansSC-Regular.ttf"),
     str(_PROJECT_ROOT / "static/fonts/NotoSansCJK-Regular.ttc"),
@@ -37,8 +48,13 @@ FONT_PATHS = [
     "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
     "/usr/share/fonts/truetype/noto/NotoSansSC-Regular.ttf",
     "/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc",
-    "C:/Windows/Fonts/msyh.ttc",
-    "C:/Windows/Fonts/simhei.ttf",
+    # Windows regular weights first, heavier weights last resort only.
+    _windows_font("msyh.ttc"),
+    _windows_font("simhei.ttf"),
+    _windows_font("simsun.ttc"),
+    _windows_font("Deng.ttf"),
+    _windows_font("msyhbd.ttc"),
+    _windows_font("msyhl.ttc"),
 ]
 
 # Color schemes per style
@@ -132,7 +148,8 @@ def _get_font(size: int, bold: bool = False, light: bool = False) -> ImageFont.F
         str(_PROJECT_ROOT / "static/fonts/NotoSansSC-Bold.ttf"),
         "/System/Library/Fonts/STHeiti Medium.ttc",
         "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
-        "C:/Windows/Fonts/msyhbd.ttc",
+        _windows_font("msyhbd.ttc"),
+        _windows_font("simhei.ttf"),
     ] if bold else []
     candidates = ([configured] if configured else []) + weighted + FONT_PATHS
     for path in candidates:

@@ -57,13 +57,12 @@ class HallService:
 
     @contextmanager
     def _connect(self):
-        connection = self.store.connect()
-        connection.row_factory = sqlite3.Row
-        try:
-            with connection:
-                yield connection
-        finally:
-            connection.close()
+        # store.connect() is itself a context manager that commits or rolls
+        # back and always closes the handle, so reuse it instead of keeping a
+        # second place that owns the connection lifetime.
+        with self.store.connect() as connection:
+            connection.row_factory = sqlite3.Row
+            yield connection
 
     @staticmethod
     def _with_topics(connection, rows):

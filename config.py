@@ -11,7 +11,7 @@ def _provider_setting(name, default=''):
     private_settings = Path(__file__).resolve().parent / 'instance' / 'provider-secrets.json'
     if private_settings.exists():
         try:
-            return json.loads(private_settings.read_text()).get(name, default)
+            return json.loads(private_settings.read_text(encoding='utf-8')).get(name, default)
         except (OSError, ValueError):
             return default
     return default

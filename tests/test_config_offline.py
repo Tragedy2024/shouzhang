@@ -22,7 +22,7 @@ def test_text_settings_do_not_reuse_vision_key(monkeypatch, tmp_path):
         "VISION_API_KEY": "offline-vision-token",
         "TEXT_MODEL": "private-model",
         "TEXT_API_URL": "https://example.invalid/chat/completions",
-    }))
+    }), encoding="utf-8")
     assert config._provider_setting("TEXT_API_KEY") == "offline-text-token"
     assert config._provider_setting("VISION_API_KEY") == "offline-vision-token"
     assert config._provider_setting("TEXT_MODEL", "deepseek-flash") == "private-model"
@@ -33,6 +33,6 @@ def test_environment_takes_precedence_over_private_config(monkeypatch, tmp_path)
     monkeypatch.setattr(config, "__file__", str(tmp_path / "config.py"))
     instance = tmp_path / "instance"
     instance.mkdir()
-    (instance / "provider-secrets.json").write_text(json.dumps({"TEXT_MODEL": "private-model"}))
+    (instance / "provider-secrets.json").write_text(json.dumps({"TEXT_MODEL": "private-model"}), encoding="utf-8")
     monkeypatch.setenv("TEXT_MODEL", "environment-model")
     assert config._provider_setting("TEXT_MODEL", "deepseek-flash") == "environment-model"

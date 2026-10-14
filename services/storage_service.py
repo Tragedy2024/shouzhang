@@ -4,6 +4,7 @@ import json
 import re
 import sqlite3
 import time
+from contextlib import contextmanager
 from pathlib import Path
 
 
@@ -50,8 +51,21 @@ class JournalStore:
             conn.execute("CREATE INDEX IF NOT EXISTS hall_posts_owner ON hall_posts(owner, created_at DESC)")
             conn.execute("CREATE INDEX IF NOT EXISTS hall_post_topics_topic ON hall_post_topics(topic_id, post_id)")
 
+    @contextmanager
     def connect(self):
-        return sqlite3.connect(self.path, timeout=15)
+        """Yield a connection and always close it afterwards.
+
+        sqlite3's own context manager only commits or rolls back; it never
+        closes. A leaked handle keeps journal.sqlite3 and its -wal/-shm files
+        locked on Windows, which breaks temp-directory cleanup and moving the
+        project folder.
+        """
+        connection = sqlite3.connect(self.path, timeout=15)
+        try:
+            with connection:
+                yield connection
+        finally:
+            connection.close()
 
     def add_photo(self, filename, owner, metadata):
         with self.connect() as conn:

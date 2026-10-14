@@ -4,12 +4,16 @@
 
 ## 本地运行
 
+项目使用 conda 环境 `shouzhang`（Python 3.12，依赖见 `requirements.txt`）。已经建好环境的机器直接激活；新机器用 `environment.yml` 重建：
+
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-python3 app.py
+conda activate shouzhang
+# 新机器: conda env create -f environment.yml
+# 依赖变更后: conda run -n shouzhang python -m pip install -r requirements.txt
+python app.py
 ```
+
+Windows 上建议先执行 `set PYTHONUTF8=1`，否则中文日志和测试输出在 GBK 控制台可能抛 `UnicodeEncodeError`。旧的 macOS 命令 `python3 -m venv .venv && source .venv/bin/activate` 只在 macOS/Linux 可用。
 
 打开 http://127.0.0.1:5001。开发服务默认仅在本机运行，调试模式关闭。
 
@@ -71,11 +75,11 @@ python3 app.py
 ## 验证
 
 ```bash
-python3 -m pytest -q
+python -m pytest -q
 node --check static/app.js
 node tests/frontend_state_check.cjs
 node tests/publish_state_check.cjs
 node tests/hall_state_check.cjs
 ```
 
-默认测试全部离线，覆盖生成重试、图片校验、跨会话权限、路径越界、照片清理、EXIF、长图裁切、文案真实性规则和异常响应；大厅测试还覆盖公开快照持久化、话题检索、发布幂等与并发、每日限额、权限撤回及前端请求竞争。真实模型与地图测试单独标记，不会默认执行；需要实际凭据且可能产生费用时，可主动运行 `python3 -m pytest -m live -v`。
+默认测试全部离线，覆盖生成重试、图片校验、跨会话权限、路径越界、照片清理、EXIF、长图裁切、文案真实性规则和异常响应；大厅测试还覆盖公开快照持久化、话题检索、发布幂等与并发、每日限额、权限撤回及前端请求竞争。真实模型与地图测试单独标记，不会默认执行；需要实际凭据且可能产生费用时，可主动运行 `python -m pytest -m live -v`。

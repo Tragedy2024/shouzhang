@@ -1,0 +1,12 @@
+# 复现本项目的运行环境：
+#   conda env create -f environment.yml
+#   conda activate shouzhang
+# 依赖的单一来源仍是 requirements.txt，这里通过 pip 引用它，避免两处清单漂移。
+name: shouzhang
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+      - -r requirements.txt

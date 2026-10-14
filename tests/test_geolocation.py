@@ -21,41 +21,32 @@ TEST_LNG = 116.3972
 class TestGPSExtraction:
     """Test GPS coordinate extraction from image EXIF."""
 
-    def test_extract_gps_no_exif(self):
+    def test_extract_gps_no_exif(self, tmp_path):
         """Test that images without EXIF return None."""
-        # Create a minimal 1x1 JPEG without EXIF
+        # tmp_path keeps the file fully closed before it is read; the previous
+        # NamedTemporaryFile + unlink inside the with-block fails on Windows.
         from PIL import Image
-        import tempfile
 
-        img = Image.new("RGB", (10, 10), color="red")
-        with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as f:
-            img.save(f.name, "JPEG")
-            result = extract_gps(f.name)
-            os.unlink(f.name)
+        path = tmp_path / "no-exif.jpg"
+        Image.new("RGB", (10, 10), color="red").save(path, "JPEG")
+        assert extract_gps(str(path)) is None, "Image without GPS EXIF should return None"
 
-        assert result is None, "Image without GPS EXIF should return None"
-
-    def test_extract_gps_nonexistent_file(self):
+    def test_extract_gps_nonexistent_file(self, tmp_path):
         """Test that nonexistent file returns None."""
-        result = extract_gps("/nonexistent/image.jpg")
+        result = extract_gps(str(tmp_path / "missing.jpg"))
         assert result is None
 
-    def test_extract_datetime_no_exif(self):
+    def test_extract_datetime_no_exif(self, tmp_path):
         """Test datetime extraction from image without EXIF."""
         from PIL import Image
-        import tempfile
 
-        img = Image.new("RGB", (10, 10), color="blue")
-        with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as f:
-            img.save(f.name, "JPEG")
-            result = extract_datetime(f.name)
-            os.unlink(f.name)
+        path = tmp_path / "no-exif.jpg"
+        Image.new("RGB", (10, 10), color="blue").save(path, "JPEG")
+        assert extract_datetime(str(path)) is None, "Image without DateTime EXIF should return None"
 
-        assert result is None, "Image without DateTime EXIF should return None"
-
-    def test_extract_datetime_nonexistent_file(self):
+    def test_extract_datetime_nonexistent_file(self, tmp_path):
         """Test that nonexistent file returns None for datetime."""
-        result = extract_datetime("/nonexistent/image.jpg")
+        result = extract_datetime(str(tmp_path / "missing.jpg"))
         assert result is None
 
 

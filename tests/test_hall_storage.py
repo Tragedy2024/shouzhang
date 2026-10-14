@@ -64,7 +64,11 @@ def test_media_rejects_symlink_targets(hall, tmp_path, target_inside):
     target = (hall.media_directory if target_inside else tmp_path) / 'other.png'
     target.write_bytes(path.read_bytes())
     path.unlink()
-    path.symlink_to(target)
+    try:
+        path.symlink_to(target)
+    except (OSError, NotImplementedError):
+        # Windows needs administrator rights or Developer Mode for symlinks.
+        pytest.skip('creating symlinks requires privileges on this system')
     assert hall.media(record['id']) is None
 
 

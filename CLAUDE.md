@@ -4,22 +4,28 @@
 
 ## 常用命令
 
+项目使用 conda 环境 `shouzhang`（Python 3.12）。依赖清单是 `requirements.txt`，环境定义在 `environment.yml`。
+Windows 下先执行 `set PYTHONUTF8=1`，否则中文日志与测试输出在 GBK 控制台会抛 `UnicodeEncodeError`。
+
 ```bash
-# 创建虚拟环境并安装依赖
-python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
+# 激活环境
+conda activate shouzhang
+# 新机器重建环境；依赖变更后补装
+conda env create -f environment.yml
+conda run -n shouzhang python -m pip install -r requirements.txt
 
 # 启动开发服务器
-python3 app.py
+python app.py
 # 运行在 http://127.0.0.1:5001，关闭 debug 模式；修改代码后需重启
 
 # 运行所有测试
-python3 -m pytest tests/ -v
+python -m pytest tests/ -v
 
 # 运行单个测试文件
-python3 -m pytest tests/test_text.py -v
+python -m pytest tests/test_text.py -v
 
 # 运行单个测试用例
-python3 -m pytest tests/test_text.py::TestTextGeneration::test_generate_journal_with_all_info -v
+python -m pytest tests/test_text.py::TestTextGeneration::test_generate_journal_with_all_info -v
 ```
 
 ## 架构
