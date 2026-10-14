@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "check": "tokenDrift",
+  "ownershipModel": "B",
+  "canonical": "static/app-shell.css",
+  "adapters": [
+    "static/creator.css",
+    "static/hall.css"
+  ],
+  "selectors": 2,
+  "runtimeDeclarations": 49,
+  "designMirrors": 43,
+  "passed": true,
+  "errors": [],
+  "limits": "Static token ownership only; browser contrast, focus, popup and cascade verification remain separate."
+}

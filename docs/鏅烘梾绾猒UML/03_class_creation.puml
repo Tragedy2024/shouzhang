@@ -1,0 +1,121 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName "PingFang SC"
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #F5F8FC
+title 智旅纪：创作子域类图（实体与协作职责）
+
+class GenerationJob <<分析实体>> {
+  jobId: UUID
+  status: JobStatus
+  stage: String
+  fields: TravelInput
+  imageDescription: String [0..1]
+  locationData: JSON [0..1]
+  retryable: Boolean
+  +canRetry(): Boolean
+}
+class TravelInput <<值类型>> {
+  location: String
+  mood: String
+  feelings: String
+  style: String
+  date: String
+  weather: String
+}
+class PhotoReference <<内嵌值对象>> {
+  filename: String
+  /position: Integer
+  gps: Coordinates [0..1]
+  datetime: String [0..1]
+  address: String [0..1]
+}
+class PrivatePhoto <<分析实体>> {
+  filename: String
+  owner: UUID
+  createdAt: Timestamp
+}
+class JournalResult <<内嵌值对象>> {
+  journal: String
+  sections: Sections
+  style: String
+  imageFilenames: String[]
+}
+class Sections <<值类型>> {
+  title: String
+  body: String
+  tags: String[]
+}
+class LocalDraft <<浏览器聚合>> {
+  form: TravelInput
+  files: File[]
+  pendingJobId: UUID [0..1]
+  /saveState: String
+  /previewState: String
+  +applyEdit()
+  +undo()
+  +redo()
+}
+class JournalSnapshot <<值对象>> {
+  sections: Sections
+  style: String
+  imageFilenames: String[]
+  +contentKey(): String
+}
+class RenderedPreview <<值对象>> {
+  key: String
+  blob: PNG
+  objectUrl: String
+}
+class "生成与导出控制器" as Controller <<控制职责>> {
+  +createJob(form, files)
+  +queryJob(jobId)
+  +retryJob(jobId)
+  +exportImage(snapshot)
+}
+class "任务执行器" as Worker <<控制职责>> {
+  +run(jobId, owner)
+}
+class JournalStore <<已有服务类>> {
+  +create_job(record)
+  +job(jobId, owner)
+  +save_job(record)
+  +claim_retry(jobId, owner)
+  +photo(filename, owner)
+}
+class "图像理解适配器" as Vision <<服务职责>>
+class "文字生成适配器" as Text <<服务职责>>
+class "地理编码适配器" as Map <<服务职责>>
+class "长图渲染器" as Renderer <<服务职责>>
+
+GenerationJob "1" *-- "1..9" PhotoReference
+PhotoReference "0..1" --> "0..1" PrivatePhoto : 访问时校验
+GenerationJob "1" *-- "0..1" JournalResult
+GenerationJob ..> TravelInput : fields 的值类型
+JournalResult ..> Sections : 内嵌内容的值类型
+LocalDraft ..> TravelInput : 表单的值类型
+LocalDraft "1" *-- "0..*" JournalSnapshot : 当前／历史／重做
+JournalSnapshot ..> Sections : 独立复制的内容值
+LocalDraft "1" *-- "0..1" RenderedPreview
+LocalDraft "0..1" --> "0..1" GenerationJob : 可选的待处理引用
+JournalResult ..> JournalSnapshot : 传输后复制，后续独立编辑
+Controller ..> Worker : 调度
+Controller --> JournalStore : 查询与校验
+Worker --> JournalStore : 持久化步骤
+Worker ..> Vision
+Worker ..> Text
+Worker ..> Map : 仅满足 GPS 条件时
+Controller ..> Renderer
+Renderer ..> JournalSnapshot : 渲染参数
+
+note bottom of Controller
+  Controller、Worker、适配器是职责抽象。
+  实现分别为 Flask 路由、_run_job 与服务模块函数。
+  JournalStore 是实际 Python 类。
+end note
+note bottom of Sections
+  tags 为成品文案标签，不是大厅 Topic。
+  值类型会被复制，虚线表示类型／调用依赖。
+end note
+@enduml

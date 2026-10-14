@@ -1,0 +1,66 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName "PingFang SC"
+skinparam shadowing false
+skinparam stateBackgroundColor #F5F8FC
+title LocalDraft：本机草稿对象状态图（两组正交状态）
+
+state "LocalDraft 存在" as Draft {
+  state "草稿保存状态" as Persistence {
+    state "恢复中" as Restoring
+    state "恢复完成／空草稿" as Loaded
+    state "待保存（防抖）" as PendingSave
+    state "保存中（串行队列）" as Saving
+    state "完整保存" as FullSaved
+    state "仅文字保存" as TextOnly
+    state "保存失败" as SaveFailed
+    [*] --> Restoring
+    Restoring --> Loaded : 恢复较新记录／没有旧记录
+    Loaded --> PendingSave : 修改素材、作品或任务状态
+    FullSaved --> PendingSave : 内容变化
+    TextOnly --> PendingSave : 内容变化／重试保存
+    SaveFailed --> PendingSave : 内容变化／重试保存
+    PendingSave --> Saving : after(450ms)／离开页面前保存
+    Saving --> FullSaved : IndexedDB 完整写入成功
+    Saving --> TextOnly : 完整保存失败 [文字后备成功]
+    Saving --> SaveFailed : 完整保存与文字后备均失败
+    FullSaved --> Saving : [串行队列仍有下一次保存]
+    TextOnly --> Saving : [串行队列仍有下一次保存]
+    SaveFailed --> Saving : [串行队列仍有下一次保存]
+    PendingSave --> PendingSave : 继续修改 / 重置防抖计时
+    Saving : 修改 / 在串行队列中追加后续保存
+  }
+  --
+  state "成品预览状态" as Preview {
+    state "无作品" as NoResult
+    state "等待排版／预览已过期" as Waiting
+    state "排版中" as Rendering
+    state "预览匹配当前作品" as Matched
+    state "排版失败或内容无效" as PreviewFailed
+    [*] --> NoResult
+    NoResult --> Waiting : 生成成功／恢复已有作品
+    Waiting --> Matched : [缓存 key 匹配当前作品]
+    Waiting --> Rendering : after(700ms) 或立即重试\n[内容有效且无匹配缓存]
+    Waiting --> PreviewFailed : [空内容或超过 12000 字]
+    Rendering --> Matched : PNG 返回 [请求版本与快照 key 仍匹配]
+    Rendering --> Waiting : 当前内容变化 / version++，中止旧请求
+    Rendering --> PreviewFailed : 当前请求失败或超时
+    Matched --> Waiting : 编辑、撤销、重做或成品设置变化
+    PreviewFailed --> Waiting : 修改内容／点击重试预览
+    Matched --> Matched : 下载 / 保存同一 PNG Blob
+    Rendering : 旧响应到达 / 忽略，不覆盖新状态
+  }
+}
+[*] --> Draft : 打开创作页，创建／恢复草稿对象
+state "清空中" as Clearing
+Draft --> Clearing : 用户确认清空 [未在生成或改写]\n/ 取消计时器，使旧预览失效，等待保存队列
+Clearing --> Loaded : 删除本机记录与缓存，重置数据\n/ 保存区回到空草稿，预览区进入 NoResult
+
+note bottom of Draft
+  保存与预览状态可以同时成立，不能串成单一发布链。
+  状态由字段、计时器、缓存 key 与操作结果推导，非数据库枚举。
+  保存失败不删除正文；预览不匹配时禁止下载。
+  关闭页面后已存草稿保留；发布状态属于 HallPost。
+  清空重置同一运行对象，仍可继续选择素材和创作。
+end note
+@enduml

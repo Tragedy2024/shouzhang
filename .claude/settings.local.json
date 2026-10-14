@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip install *)",
+      "Bash(python3 -m pip install flask pillow requests pytest)",
+      "Bash(python3 *)",
+      "Bash(curl *)",
+      "WebFetch(domain:localhost)"
+    ]
+  }
+}

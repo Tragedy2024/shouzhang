@@ -1,0 +1,117 @@
+/* Canonical runtime tokens; DESIGN.md mirrors these values. */
+:root {
+  color-scheme: light;
+  --app-bg: #f3f5f6;
+  --app-surface: #ffffff;
+  --app-surface-soft: #eef1f3;
+  --app-paper: #ffffff;
+  --app-ink: #253038;
+  --app-muted: #5e6c76;
+  --app-faint: #64717c;
+  --app-line: #dde3e7;
+  --app-control-line: #8596a2;
+  --app-accent: #b83f46;
+  --app-accent-hover: #a2363d;
+  --app-accent-soft: #fbebed;
+  --app-accent-line: #e9bfc3;
+  --app-button: #b83f46;
+  --app-button-hover: #a2363d;
+  --app-on-button: #ffffff;
+  --app-focus: #b83f46;
+  --app-warning-bg: #fff7e7;
+  --app-warning-ink: #735019;
+  --app-warning-line: #e1c78f;
+  --app-backdrop: rgb(20 28 35 / .58);
+  --app-shadow: 0 8px 28px rgb(24 38 48 / .06);
+  --app-dialog-shadow: 0 24px 80px rgb(24 38 48 / .2);
+  --app-font-body: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --app-font-display: ui-serif, "Songti SC", "Noto Serif SC", serif;
+  --app-radius-control: 10px;
+  --app-radius-card: 20px;
+  --app-layer-sticky: 100;
+  --app-layer-dialog: 600;
+  /* Legacy geometry sheet consumes the same canonical semantic roles. */
+  --paper: var(--app-bg);
+  --surface: var(--app-surface);
+  --ink: var(--app-ink);
+  --muted: var(--app-muted);
+  --border: var(--app-line);
+  --red: var(--app-accent);
+  --red-soft: var(--app-accent-soft);
+  --radius: var(--app-radius-control);
+}
+:root[data-creator-theme="dark"], :root[data-hall-theme="dark"] {
+  color-scheme: dark;
+  --app-bg: #171e23;
+  --app-surface: #20292f;
+  --app-surface-soft: #29343c;
+  --app-ink: #f1f4f6;
+  --app-muted: #b6c1c9;
+  --app-faint: #a4b2bd;
+  --app-line: #3b4852;
+  --app-control-line: #6d7d89;
+  --app-accent: #f1a5ab;
+  --app-accent-hover: #ffc0c5;
+  --app-accent-soft: #3e2d34;
+  --app-accent-line: #79535b;
+  --app-button: #ad3b43;
+  --app-button-hover: #992e36;
+  --app-focus: #f1a5ab;
+  --app-warning-bg: #3a3222;
+  --app-warning-ink: #f0d6a2;
+  --app-warning-line: #79633e;
+  --app-shadow: 0 8px 28px rgb(0 0 0 / .16);
+  --app-dialog-shadow: 0 24px 80px rgb(0 0 0 / .4);
+}
+html { scrollbar-gutter: stable; scroll-padding-top: 24px; }
+*, *::before, *::after { box-sizing: border-box; }
+* { scrollbar-width: auto; scrollbar-color: var(--app-control-line) var(--app-surface-soft); }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: var(--app-surface-soft); }
+*::-webkit-scrollbar-thumb { background: var(--app-control-line); border: 2px solid var(--app-surface-soft); border-radius: 10px; }
+body.creator-page, body.hall-page { margin: 0; background: var(--app-bg); color: var(--app-ink); font-family: var(--app-font-body); font-size: 15px; line-height: 1.65; }
+[hidden] { display: none !important; }
+button, input, select, textarea { font: inherit; }
+button, a, summary, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+:is(.creator-page, .hall-page) :is(button, a, summary, input, select, textarea):focus-visible { outline: 2px solid var(--app-focus); outline-offset: 3px; }
+button:disabled { opacity: .52; cursor: not-allowed; }
+button { cursor: pointer; }
+input, select, textarea { color: var(--app-ink); background: var(--app-surface); }
+input::placeholder, textarea::placeholder { color: var(--app-faint); opacity: 1; }
+textarea { resize: none !important; overflow-y: auto; }
+.app-icon-button { display: inline-grid; place-items: center; width: 44px; min-width: 44px; height: 44px; min-height: 44px; padding: 0; border: 1px solid var(--app-line); border-radius: var(--app-radius-control); color: var(--app-ink); background: var(--app-surface); }
+.app-icon-button:hover:enabled { color: var(--app-accent); background: var(--app-accent-soft); }
+input[type="search"]::-webkit-search-cancel-button { display: none; }
+:is(.creator-page, .hall-page) .app-header { display: flex; align-items: center; gap: 40px; margin-bottom: 28px; padding: 0 0 24px; border-bottom: 1px solid var(--app-line); text-align: left; }
+.brand-lockup { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.brand-mark { display: grid; place-items: center; flex-shrink: 0; width: 44px; height: 44px; border-radius: var(--app-radius-control); background: var(--app-button); color: var(--app-on-button); font-size: 14px; font-weight: 750; letter-spacing: .08em; }
+.brand-lockup h1, .hall-brand-name { color: var(--app-ink); font-size: 22px; font-weight: 750; line-height: 1.25; letter-spacing: .04em; }
+.brand-lockup p, .hall-brand p { margin: 5px 0 0; color: var(--app-muted); font-size: 11px; line-height: 1.5; letter-spacing: .1em; }
+.site-nav { display: flex; gap: 28px; align-self: stretch; align-items: center; flex: 1; }
+.site-nav a { display: flex; align-items: center; min-height: 44px; padding: 8px 0; border-bottom: 2px solid transparent; color: var(--app-muted); font-size: 15px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.site-nav a.active, .site-nav a[aria-current="page"] { border-color: var(--app-accent); color: var(--app-accent); }
+.site-nav a:hover { color: var(--app-accent-hover); }
+:is(.creator-theme-toggle, .hall-theme-toggle, .button-secondary, .btn-secondary, .hall-secondary, .publish-secondary) { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 9px 16px; border: 1px solid var(--app-control-line); border-radius: var(--app-radius-control); background: var(--app-surface); color: var(--app-ink); font-size: 14px; line-height: 1.6; font-weight: 600; white-space: nowrap; text-decoration: none; }
+:is(.creator-theme-toggle, .hall-theme-toggle, .button-secondary, .btn-secondary, .hall-secondary, .publish-secondary):hover:enabled { background: var(--app-surface-soft); }
+:is(.btn-primary, .publish-primary, .app-confirm-primary) { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 11px 20px; border: 1px solid var(--app-button); border-radius: var(--app-radius-control); background: var(--app-button); color: var(--app-on-button); font-size: 15px; line-height: 1.6; font-weight: 650; }
+:is(.btn-primary, .publish-primary, .app-confirm-primary):hover:enabled { background: var(--app-button-hover); border-color: var(--app-button-hover); }
+:is(.text-button, .hall-text-button) { min-height: 44px; border: 0; background: transparent; color: var(--app-accent); font-size: 13px; font-weight: 600; }
+:is(.text-button, .hall-text-button):hover:enabled { color: var(--app-accent-hover); }
+.input-group :is(input, select, textarea), .publish-field :is(input, textarea) { width: 100%; min-height: 48px; padding: 11px 13px; border: 1px solid var(--app-control-line); border-radius: var(--app-radius-control); color: var(--app-ink); background: var(--app-surface); font-size: 16px; line-height: 1.6; transition: border-color .15s ease; box-shadow: none; }
+.input-group :is(input, textarea)::placeholder { color: var(--app-faint); font-size: 14px; }
+.input-group :is(input, select, textarea):focus, .publish-field :is(input, textarea):focus { border-color: var(--app-focus); }
+:is(.publish-dialog, .hall-detail, .app-confirm-dialog) { border: 1px solid var(--app-line); border-radius: var(--app-radius-card); background: var(--app-surface); color: var(--app-ink); box-shadow: var(--app-dialog-shadow); }
+dialog::backdrop { background: var(--app-backdrop); }
+.app-confirm-dialog { width: min(440px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); padding: 28px; overflow: auto; z-index: var(--app-layer-dialog); }
+.app-confirm-dialog h2 { margin: 0 0 12px; font-size: 21px; line-height: 1.5; }
+.app-confirm-dialog p { margin: 0 0 24px; color: var(--app-muted); font-size: 14px; line-height: 1.8; }
+.app-confirm-actions { display: flex; justify-content: flex-end; gap: 12px; }
+@media (max-width: 760px) {
+  :is(.creator-page, .hall-page) .app-header { flex-wrap: wrap; gap: 16px; padding-bottom: 16px; margin-bottom: 20px; }
+  .site-nav { order: 3; flex-basis: 100%; gap: 24px; }
+  .brand-lockup h1, .hall-brand-name { font-size: 19px; }
+  .brand-mark { width: 40px; height: 40px; }
+  .app-confirm-dialog { padding: 24px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; animation-iteration-count: 1 !important; } }
+@media (forced-colors: active) { * { scrollbar-color: auto; } :is(button, input, select, textarea) { border-color: ButtonText; } }

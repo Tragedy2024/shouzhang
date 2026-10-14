@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智旅纪 UI 原型截图页</title>
+  <link rel="stylesheet" href="../static/style.css">
+  <style>
+    body { min-height: auto; }
+    .shot-title {
+      max-width: 1200px;
+      margin: 0 auto 16px;
+      padding: 18px 24px 0;
+      color: #555;
+      font-weight: 700;
+    }
+    .mock-photo {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      background: linear-gradient(135deg, #b71c1c, #fdd835);
+    }
+    .mock-photo.two { background: linear-gradient(135deg, #455a64, #90caf9); }
+    .mock-photo.three { background: linear-gradient(135deg, #6d4c41, #ffcc80); }
+    .result-image.mock {
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      background: linear-gradient(135deg, #7b1fa2, #f48fb1);
+    }
+    .shot-page { display: none; }
+    .shot-page.active { display: block; }
+  </style>
+</head>
+<body>
+  <div id="shot1" class="shot-page active">
+    <div class="app-container">
+      <header class="app-header">
+        <h1>智能旅行手帐</h1>
+        <p class="subtitle">上传旅行照片，AI 帮你生成杂志风游记</p>
+      </header>
+      <main class="main-layout">
+        <section class="panel input-panel">
+          <div class="upload-area">
+            <div class="upload-icon">+</div>
+            <p>点击或拖拽图片到此处</p>
+            <p class="hint">支持 JPG、JPEG、PNG、WebP，可多选，单文件最大 16MB</p>
+          </div>
+          <div class="style-section">
+            <label class="section-label">手帐风格</label>
+            <div class="style-grid">
+              <div class="style-card selected"><span class="style-icon">📕</span><span class="style-name">小红书风</span><span class="style-desc">活泼亲切·种草达人</span></div>
+              <div class="style-card"><span class="style-icon">📷</span><span class="style-name">INS风</span><span class="style-desc">简约高级·留白美学</span></div>
+              <div class="style-card"><span class="style-icon">📖</span><span class="style-name">日杂风</span><span class="style-desc">温暖日常·治愈系</span></div>
+              <div class="style-card"><span class="style-icon">🎞️</span><span class="style-name">胶片风</span><span class="style-desc">复古怀旧·故事感</span></div>
+              <div class="style-card"><span class="style-icon">🗂️</span><span class="style-name">Muji极简风</span><span class="style-desc">极致简约·素雅干净</span></div>
+            </div>
+          </div>
+          <div class="input-row">
+            <div class="input-group input-half"><label>旅行日期</label><input type="date"></div>
+            <div class="input-group input-half"><label>天气状况</label><select><option>选择天气</option></select></div>
+          </div>
+          <div class="text-inputs">
+            <div class="input-group"><label>游玩地点</label><input placeholder="如：北京故宫、杭州西湖..."></div>
+            <div class="input-group"><label>游玩心情</label><input placeholder="如：开心、悠闲、震撼..."></div>
+            <div class="input-group"><label>旅行感受</label><textarea rows="2" placeholder="记录下你的旅行感受，AI 会融入到手帐中..."></textarea></div>
+          </div>
+          <button class="btn-submit">生成旅行手帐</button>
+        </section>
+        <section class="panel output-panel">
+          <div class="empty-state"><div class="empty-icon">--</div><h3>等待生成</h3><p>上传照片并填写信息后，点击"生成旅行手帐"<br>AI 将为你创作专属游记</p></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="shot2" class="shot-page">
+    <div class="app-container">
+      <header class="app-header"><h1>智能旅行手帐</h1><p class="subtitle">上传旅行照片，AI 帮你生成杂志风游记</p></header>
+      <main class="main-layout">
+        <section class="panel input-panel">
+          <div class="upload-area"><p>已选择 <b>3</b> 张照片<br><small>点击更换</small></p></div>
+          <div class="preview-grid" style="display:grid">
+            <div class="preview-item"><div class="mock-photo">照片 1</div><button class="preview-remove">&times;</button></div>
+            <div class="preview-item"><div class="mock-photo two">照片 2</div><button class="preview-remove">&times;</button></div>
+            <div class="preview-item"><div class="mock-photo three">照片 3</div><button class="preview-remove">&times;</button></div>
+          </div>
+          <div class="style-section"><label class="section-label">手帐风格</label><div class="style-grid"><div class="style-card"><span class="style-icon">📕</span><span class="style-name">小红书风</span><span class="style-desc">活泼亲切·种草达人</span></div><div class="style-card"><span class="style-icon">📷</span><span class="style-name">INS风</span><span class="style-desc">简约高级·留白美学</span></div><div class="style-card selected"><span class="style-icon">📖</span><span class="style-name">日杂风</span><span class="style-desc">温暖日常·治愈系</span></div><div class="style-card"><span class="style-icon">🎞️</span><span class="style-name">胶片风</span><span class="style-desc">复古怀旧·故事感</span></div><div class="style-card"><span class="style-icon">🗂️</span><span class="style-name">Muji极简风</span><span class="style-desc">极致简约·素雅干净</span></div></div></div>
+          <div class="input-row"><div class="input-group input-half"><label>旅行日期</label><input value="2026-05-18"></div><div class="input-group input-half"><label>天气状况</label><select><option>晴天☀️</option></select></div></div>
+          <div class="text-inputs"><div class="input-group"><label>游玩地点</label><input value="北京故宫"></div><div class="input-group"><label>游玩心情</label><input value="震撼、开心"></div><div class="input-group"><label>旅行感受</label><textarea rows="2">红墙黄瓦在阳光下非常有故事感，像走进历史现场。</textarea></div></div>
+          <button class="btn-submit">生成旅行手帐</button>
+        </section>
+        <section class="panel output-panel"><div class="empty-state"><div class="empty-icon">--</div><h3>等待生成</h3><p>右侧将在生成后展示手帐文案、定位和景点信息</p></div></section>
+      </main>
+    </div>
+  </div>
+
+  <div id="shot3" class="shot-page">
+    <div class="app-container">
+      <header class="app-header"><h1>智能旅行手帐</h1><p class="subtitle">上传旅行照片，AI 帮你生成杂志风游记</p></header>
+      <main class="main-layout">
+        <section class="panel input-panel">
+          <div class="upload-area"><p>已选择 <b>3</b> 张照片<br><small>点击更换</small></p></div>
+          <div class="style-section"><label class="section-label">手帐风格</label><div class="style-grid"><div class="style-card selected"><span class="style-icon">📕</span><span class="style-name">小红书风</span><span class="style-desc">活泼亲切·种草达人</span></div><div class="style-card"><span class="style-icon">📷</span><span class="style-name">INS风</span><span class="style-desc">简约高级·留白美学</span></div><div class="style-card"><span class="style-icon">📖</span><span class="style-name">日杂风</span><span class="style-desc">温暖日常·治愈系</span></div><div class="style-card"><span class="style-icon">🎞️</span><span class="style-name">胶片风</span><span class="style-desc">复古怀旧·故事感</span></div><div class="style-card"><span class="style-icon">🗂️</span><span class="style-name">Muji极简风</span><span class="style-desc">极致简约·素雅干净</span></div></div></div>
+          <button class="btn-submit" disabled>生成旅行手帐</button>
+          <div class="loading" style="display:flex"><div class="spinner"></div><p>正在分析照片、生成手帐...</p></div>
+        </section>
+        <section class="panel output-panel"><div class="empty-state"><div class="empty-icon">--</div><h3>生成中</h3><p>系统正在进行 EXIF 解析、VLM 图片理解、地图查询和 LLM 文案生成</p></div></section>
+      </main>
+    </div>
+  </div>
+
+  <div id="shot4" class="shot-page">
+    <div class="app-container">
+      <header class="app-header"><h1>智能旅行手帐</h1><p class="subtitle">上传旅行照片，AI 帮你生成杂志风游记</p></header>
+      <main class="main-layout">
+        <section class="panel input-panel"><div class="upload-area"><p>已选择 <b>3</b> 张照片<br><small>点击更换</small></p></div><button class="btn-submit">重新生成旅行手帐</button></section>
+        <section class="panel output-panel">
+          <div class="result-content" style="display:flex">
+            <div class="result-image-grid"><div class="result-image multi mock">故宫广场</div><div class="result-image multi mock" style="background:linear-gradient(135deg,#1565c0,#80deea)">蓝天屋檐</div></div>
+            <div class="image-meta">
+              <div class="meta-item"><span class="meta-label">📍 拍摄地点</span><span>北京市东城区故宫博物院</span></div>
+              <div class="meta-item"><span class="meta-label">🕐 拍摄时间</span><span>2026-05-18 10:30:00</span></div>
+              <div class="meta-item"><span class="meta-label">🌐 GPS</span><span>39.9163, 116.3972</span></div>
+              <div class="meta-item"><span class="meta-label">🎨 风格</span><span>小红书风</span></div>
+            </div>
+            <div class="journal-card"><div class="journal-content">✨故宫晴日手帐\n\n今天终于走进了红墙黄瓦之间。阳光落在琉璃瓦上，整个广场都像被点亮了一样。\n\nAI 根据照片识别出宫殿、广场、人群和晴朗天气，并结合 GPS 定位补充了附近景点。很适合整理成一篇可以分享的旅行记录。\n\n#北京旅行 #故宫 #旅行手帐</div></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="shot5" class="shot-page">
+    <div class="app-container">
+      <header class="app-header"><h1>智能旅行手帐</h1><p class="subtitle">上传旅行照片，AI 帮你生成杂志风游记</p></header>
+      <main class="main-layout">
+        <section class="panel input-panel"><div class="upload-area"><p>已选择 <b>3</b> 张照片<br><small>点击更换</small></p></div><button class="btn-submit">继续创作</button></section>
+        <section class="panel output-panel">
+          <div class="result-content" style="display:flex">
+            <div class="journal-card"><div class="journal-content">☕ 在红墙边停留的上午\n\n风穿过午门，光落在石阶上。我把这一天收进照片，也收进一段温柔的文字里。</div></div>
+            <div class="regen-section"><p class="regen-label">不满意？换个风格试试</p><div class="regen-buttons"><button class="btn-regen">更文艺</button><button class="btn-regen">更少女</button><button class="btn-regen">更治愈</button><button class="btn-regen">更像朋友圈</button><button class="btn-regen">更像旅行杂志</button></div></div>
+            <button class="btn-export"><span class="export-icon">🖼️</span> 一键生成手帐长图</button>
+            <div class="export-loading" style="display:flex"><div class="spinner small"></div><p>正在排版生成杂志风长图...</p></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const target = new URLSearchParams(location.search).get("shot") || "1";
+    document.querySelectorAll(".shot-page").forEach(el => el.classList.remove("active"));
+    document.getElementById("shot" + target).classList.add("active");
+  </script>
+</body>
+</html>

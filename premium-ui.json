@@ -1,0 +1,32 @@
+{
+  "profile": "product-admin",
+  "sourceRoots": ["static", "templates"],
+  "locale": "zh-CN",
+  "canonicalMap": "UX-CONTRACT.md",
+  "requiredCapabilities": ["Select/Listbox", "Date", "Form", "Scrollbar", "Toast", "CRUD"],
+  "ownership": {
+    "Select/Listbox": "native",
+    "Date": "native"
+  },
+  "requiredCommands": ["creatorState", "creatorResilience", "hallState", "publishState", "sharedUI", "tokenDrift", "semanticBindings"],
+  "commands": {
+    "creatorState": "node tests/frontend_state_check.cjs",
+    "creatorResilience": "node tests/creator_resilience_check.cjs",
+    "hallState": "node tests/hall_state_check.cjs",
+    "publishState": "node tests/publish_state_check.cjs",
+    "sharedUI": "node tests/app_ui_check.cjs",
+    "tokenDrift": "python3 docs/frontend/check_token_drift.py",
+    "semanticBindings": "node docs/frontend/semantic_binding_check.cjs --output docs/frontend/semantic-binding-report.json"
+  },
+  "evidence": {
+    "crudFullFlow": "tests/hall_state_check.cjs",
+    "failurePaths": "tests/creator_resilience_check.cjs"
+  },
+  "tokenOwnership": {
+    "model": "B",
+    "canonical": "static/app-shell.css",
+    "mapping": "docs/frontend/token-mapping.json",
+    "documentation": "DESIGN.md"
+  },
+  "verificationStatus": "Commands and evidence paths are declarations; actual results belong in the migration ledger and delivery report."
+}

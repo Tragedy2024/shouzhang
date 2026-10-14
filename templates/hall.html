@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="在智旅纪手帐大厅，看看大家公开分享的旅行手帐，按话题发现下一段旅程。">
+  <title>手帐大厅 | 智旅纪</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/app-shell.css">
+  <link rel="stylesheet" href="/static/hall.css">
+  <script src="/static/app-ui.js" defer></script>
+  <script src="/static/hall.js" defer></script>
+</head>
+<body class="hall-page">
+  <a class="skip-link" href="#hallMain">跳到公开手帐</a>
+  <div class="page-shell hall-shell">
+    <header class="app-header hall-header">
+      <a class="brand-lockup hall-brand" href="/" aria-label="智旅纪，前往创作">
+        <span class="brand-mark" aria-hidden="true">ZT</span>
+        <div><span class="hall-brand-name">智旅纪</span><p>把旅程留在纸上</p></div>
+      </a>
+      <nav class="site-nav" aria-label="主要导航"><a href="/">创作</a><a href="/hall" class="active" aria-current="page">手帐大厅</a></nav>
+      <button type="button" id="hallThemeToggle" class="hall-theme-toggle" aria-label="切换显示主题">外观</button>
+    </header>
+
+    <main id="hallMain" class="hall-main">
+      <div class="hall-intro"><div class="hall-intro-copy"><h1>手帐大厅</h1><p>翻一翻大家的旅程，也让你的故事被看见。</p></div><a id="hallHeroCreate" class="hall-create btn-primary" href="/">去创作 <span aria-hidden="true">↗</span></a></div>
+      <div class="hall-discovery">
+        <div class="hall-list-tabs" role="group" aria-label="作品范围"><button type="button" id="hallLatestTab" class="active" aria-pressed="true">最新分享</button><button type="button" id="hallMineTab" aria-pressed="false">我的发布</button></div>
+        <form id="hallSearchForm" class="hall-search" role="search" novalidate><label class="visually-hidden" for="hallSearchInput">搜索手帐标题或分享说明</label><input id="hallSearchInput" type="search" maxlength="200" placeholder="搜标题、旅行故事" autocomplete="off"><button type="button" id="hallSearchClear" aria-label="清除搜索" hidden>×</button><button type="submit">搜索</button></form>
+      </div>
+      <div class="hall-topic-row"><div id="hallTopics" class="hall-topics" role="group" aria-label="按话题筛选"><button type="button" data-topic="" aria-pressed="true" class="selected">全部话题</button></div><div class="hall-filter-actions"><button type="button" id="hallClearFilters" class="hall-text-button text-button" hidden>清除筛选</button><button type="button" id="hallTopicsRetry" class="hall-text-button text-button" hidden>重新加载话题</button></div></div>
+      <p class="hall-mine-note" id="hallMineNote" hidden>这里是你在这个浏览器发布的作品。只有你可以撤回它们的公开展示。</p>
+      <p id="hallListStatus" class="hall-list-status" role="status" aria-live="polite"></p>
+      <div class="hall-error" id="hallListError" role="alert" hidden><p id="hallListErrorText"></p><button type="button" id="hallListRetry" class="hall-secondary button-secondary">重新加载</button></div>
+      <div id="hallLoading" class="hall-loading" aria-hidden="true" hidden><div></div><div></div><div></div><div></div></div>
+      <section class="hall-empty" id="hallEmpty" aria-labelledby="hallEmptyTitle" hidden>
+        <div class="hall-empty-art"><img src="/static/images/hall-travel-banner.webp" alt="沿海公路旁的海湾，帆船停在蓝色海面上" width="1536" height="1024" loading="lazy" decoding="async"></div>
+        <div class="hall-empty-content"><h2 id="hallEmptyTitle">这里还没有公开手帐</h2><p id="hallEmptyCopy">把喜欢的一页旅程，分享给经过这里的人。</p><div class="hall-empty-actions"><a href="/" class="hall-primary btn-primary">去创作手帐 <span aria-hidden="true">↗</span></a><button type="button" id="hallResetFilters" class="hall-secondary button-secondary" hidden>看看全部分享</button></div></div>
+      </section>
+      <div id="hallFeed" class="hall-feed" aria-label="公开旅行手帐" aria-busy="false"></div>
+      <div class="hall-pagination"><button type="button" id="hallLoadMore" class="hall-secondary button-secondary" hidden>再看看更多</button><p id="hallEndNote" hidden>已经翻到最后一页了。</p></div>
+    </main>
+    <footer class="app-footer hall-footer">每一页公开手帐，都由作者主动分享。</footer>
+  </div>
+
+  <dialog id="hallDetail" class="hall-detail" aria-labelledby="hallDetailTitle">
+    <button type="button" id="hallDetailClose" class="hall-detail-close app-icon-button" aria-label="关闭手帐详情">×</button>
+    <div id="hallDetailLoading" class="hall-detail-loading" role="status" aria-live="polite">正在翻开这页手帐…</div>
+    <div id="hallDetailError" class="hall-detail-error" role="alert" hidden><h2 id="hallDetailErrorTitle">这页手帐暂时打不开</h2><p id="hallDetailErrorText"></p><button type="button" id="hallDetailRetry" class="hall-secondary button-secondary">重试</button></div>
+    <div id="hallDetailContent" class="hall-detail-layout" hidden>
+      <div class="hall-detail-paper"><img id="hallDetailImage" alt="完整旅行手帐长图"><p id="hallImageError" class="hall-image-error" role="status" hidden>图片暂时没有加载出来。</p><button type="button" id="hallImageRetry" class="hall-secondary button-secondary" hidden>重新加载图片</button></div>
+      <div class="hall-detail-copy"><h2 id="hallDetailTitle"></h2><div class="hall-detail-byline"><span id="hallDetailAuthor"></span><time id="hallDetailTime"></time></div><p id="hallDetailCaption" class="hall-caption"></p><div id="hallDetailTopics" class="hall-detail-topics" aria-label="这页手帐的话题"></div><div id="hallOwnerActions" class="hall-owner-actions" hidden><p>公开作品会持续保留，不受草稿照片的 7 天保存期限影响。你可以随时撤回公开展示。</p><button type="button" id="hallWithdrawStart" class="hall-text-button text-button">撤回公开展示</button><div id="hallWithdrawConfirm" class="hall-withdraw-confirm" hidden><p>撤回后，这页作品会从大厅隐藏，其他人也无法通过链接打开。已下载的图片会保留。</p><div><button type="button" id="hallWithdrawConfirmBtn" class="hall-primary btn-primary">确认撤回</button><button type="button" id="hallWithdrawCancel" class="hall-secondary button-secondary">继续展示</button></div></div><p id="hallWithdrawStatus" class="hall-withdraw-status" role="status" aria-live="polite"></p></div></div>
+    </div>
+  </dialog>
+</body>
+</html>

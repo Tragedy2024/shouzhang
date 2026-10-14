@@ -1,0 +1,83 @@
+@startuml
+!pragma layout smetana
+left to right direction
+skinparam defaultFontName "PingFang SC"
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam ArrowColor #34495E
+skinparam usecaseBackgroundColor #F5F8FC
+title 智旅纪：系统用例图
+
+actor "大厅访客" as Visitor
+actor "创作者" as Creator
+actor "发布者" as Publisher
+Creator --|> Visitor
+Publisher --|> Creator
+
+rectangle "智旅纪系统（网站、后台与本机草稿）" {
+  usecase "UC01\n生成旅行手账" as Generate
+  usecase "校验并保存素材" as Prepare
+  usecase "分析旅行照片" as Analyze
+  usecase "撰写手账正文" as Write
+  usecase "自动补充拍摄地点" as Locate
+  usecase "UC02\n编辑并导出手账" as EditExport
+  usecase "生成或复用当前 PNG 成品" as Render
+  usecase "UC04 调整文案语气" as Rewrite
+  usecase "UC05 撤销／重做编辑" as History
+  usecase "UC06 恢复本机草稿" as Restore
+  usecase "UC07 清空本机草稿" as Clear
+  usecase "UC08 复制手账文案" as Copy
+  usecase "UC09 查看／重试生成任务" as Retry
+  usecase "UC10 查看风格样张" as Sample
+  usecase "UC03\n发布成品到大厅" as Publish
+  usecase "明确确认公开" as Consent
+  usecase "保存独立的公开成品" as PublicSnapshot
+  usecase "UC11 浏览大厅作品" as Browse
+  usecase "UC12 搜索／按话题筛选" as Search
+  usecase "UC13 查看作品详情与长图" as Detail
+  usecase "UC14 查看我的发布" as Mine
+  usecase "UC15 撤回自己的发布" as Withdraw
+}
+
+actor "图像理解服务\n华为云 Qwen" as Vision
+actor "文字生成服务\nDeepSeek 官方" as Text
+actor "地理编码服务\n百度地图" as Map
+
+Visitor -right- Browse
+Visitor -right- Search
+Visitor -right- Detail
+Creator -right- Generate
+Creator -right- EditExport
+Creator -right- Rewrite
+Creator -right- History
+Creator -right- Restore
+Creator -right- Clear
+Creator -right- Copy
+Creator -right- Retry
+Creator -right- Sample
+Creator -right- Publish
+Publisher -right- Mine
+Publisher -right- Withdraw
+
+Generate .right.> Prepare : <<include>>
+Generate .right.> Analyze : <<include>>
+Generate .right.> Write : <<include>>
+Locate ..> Generate : <<extend>>\n[有 GPS 且未手填地点]
+EditExport .right.> Render : <<include>>
+Publish .right.> Consent : <<include>>
+Publish .right.> PublicSnapshot : <<include>>
+Search ..> Browse : <<extend>>\n[用户设置搜索或话题条件]
+Analyze -right- Vision
+Write -right- Text
+Rewrite -right- Text
+Locate -right- Map
+
+note bottom of Publisher
+  参与者表示角色；同一个人可切换角色。
+  发布管理依据浏览器 owner_id，未实现账号登录。
+end note
+note bottom of EditExport
+  UC01、UC02、UC03 是独立用户目标。
+  成功结果可衔接下一目标，不能用 include 表示先后。
+end note
+@enduml

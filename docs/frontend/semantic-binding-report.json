@@ -1,0 +1,742 @@
+{
+  "schemaVersion": 1,
+  "check": "semanticBindings",
+  "passed": true,
+  "literalButtons": 45,
+  "verifiedBindings": 45,
+  "scope": "All literal buttons in templates/*.html; only scripts actually loaded by each template are eligible evidence.",
+  "limits": "Static ID/delegation evidence only. Generated buttons, handler semantics, keyboard, focus and actual navigation require the project state tests and browser checks. Official strict findings remain unchanged.",
+  "errors": [],
+  "buttons": [
+    {
+      "file": "templates/hall.html",
+      "line": 23,
+      "id": "hallThemeToggle",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "shared-theme-listener",
+        "owner": "ZhilvjiUI.installTheme",
+        "file": "static/hall.js",
+        "line": 23,
+        "foundation": "static/app-ui.js"
+      }
+    },
+    {
+      "file": "templates/hall.html",
+      "line": 29,
+      "id": "hallLatestTab",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "hallLatestTab",
+        "event": "click",
+        "file": "static/hall.js",
+        "line": 411
+      }
+    },
+    {
+      "file": "templates/hall.html",
+      "line": 29,
+      "id": "hallMineTab",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "hallMineTab",
+        "event": "click",
+        "file": "static/hall.js",
+        "line": 412
+      }
+    },
+    {
+      "file": "templates/hall.html",
+      "line": 30,
+      "id": "hallSearchClear",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "hallSearchClear",
+        "event": "click",
+        "file": "static/hall.js",
+        "line": 424
+      }
+    },
+    {
+      "file": "templates/hall.html",
+      "line": 30,
+      "id": null,
+      "data": {},
+      "type": "submit",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-form-submit",
+        "owner": "hallSearchForm",
+        "event": "submit",
+        "file": "static/hall.js",
+        "line": 419
+      }
+    },
+    {
+      "file": "templates/hall.html",
+      "line": 32,
+      "id": null,
+      "data": {
+        "data-topic": ""
+      },
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "delegated-data-listener",
+        "owner": "hallTopics",
+        "event": "click",
+        "file": "static/hall.js",
+        "line": 425,
+        "selector": "button[data-topic]",
+        "attribute": "data-topic",
+        "action": "setFilters"
+      }
+    },
+    {
+      "file": "templates/hall.html",
+      "line": 32,
+      "id": "hallClearFilters",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "hallClearFilters",
+        "event": "click",
+        "file": "static/hall.js",
+        "line": 428
+      }
+    },
+    {
+      "file": "templates/hall.html",
+      "line": 32,
+      "id": "hallTopicsRetry",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "hallTopicsRetry",
+        "event": "click",
+        "file": "static/hall.js",
+        "line": 431
+      }
+    },
+    {
+      "file": "templates/hall.html",
+      "line": 35,
+      "id": "hallListRetry",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "hallListRetry",
+        "event": "click",
+        "file": "static/hall.js",
+        "line": 430
+      }
+    },
+    {
+      "file": "templates/hall.html",
+      "line": 39,
+      "id": "hallResetFilters",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "hallResetFilters",
+        "event": "click",
+        "file": "static/hall.js",
+        "line": 427
+      }
+    },
+    {
+      "file": "templates/hall.html",
+      "line": 42,
+      "id": "hallLoadMore",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "hallLoadMore",
+        "event": "click",
+        "file": "static/hall.js",
+        "line": 429
+      }
+    },
+    {
+      "file": "templates/hall.html",
+      "line": 48,
+      "id": "hallDetailClose",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "hallDetailClose",
+        "event": "click",
+        "file": "static/hall.js",
+        "line": 438
+      }
+    },
+    {
+      "file": "templates/hall.html",
+      "line": 50,
+      "id": "hallDetailRetry",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "hallDetailRetry",
+        "event": "click",
+        "file": "static/hall.js",
+        "line": 442
+      }
+    },
+    {
+      "file": "templates/hall.html",
+      "line": 52,
+      "id": "hallImageRetry",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "hallImageRetry",
+        "event": "click",
+        "file": "static/hall.js",
+        "line": 445
+      }
+    },
+    {
+      "file": "templates/hall.html",
+      "line": 53,
+      "id": "hallWithdrawStart",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "hallWithdrawStart",
+        "event": "click",
+        "file": "static/hall.js",
+        "line": 446
+      }
+    },
+    {
+      "file": "templates/hall.html",
+      "line": 53,
+      "id": "hallWithdrawConfirmBtn",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "hallWithdrawConfirmBtn",
+        "event": "click",
+        "file": "static/hall.js",
+        "line": 448
+      }
+    },
+    {
+      "file": "templates/hall.html",
+      "line": 53,
+      "id": "hallWithdrawCancel",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "hallWithdrawCancel",
+        "event": "click",
+        "file": "static/hall.js",
+        "line": 447
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 27,
+      "id": "clearDraftBtn",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "clearDraftBtn",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 1062
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 28,
+      "id": "creatorThemeToggle",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "shared-theme-listener",
+        "owner": "ZhilvjiUI.installTheme",
+        "file": "static/creator-theme.js",
+        "line": 3,
+        "foundation": "static/app-ui.js"
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 32,
+      "id": "materialsTab",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "materialsTab",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 966
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 33,
+      "id": "workTab",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "workTab",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 967
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 44,
+      "id": "uploadArea",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "uploadArea",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 968
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 58,
+      "id": null,
+      "data": {
+        "data-style": "xiaohongshu"
+      },
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "delegated-data-listener",
+        "owner": "styleGrid",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 1047,
+        "selector": "[data-style]",
+        "attribute": "data-style",
+        "action": "selectStyle"
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 59,
+      "id": null,
+      "data": {
+        "data-style": "ins"
+      },
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "delegated-data-listener",
+        "owner": "styleGrid",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 1047,
+        "selector": "[data-style]",
+        "attribute": "data-style",
+        "action": "selectStyle"
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 60,
+      "id": null,
+      "data": {
+        "data-style": "japanese"
+      },
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "delegated-data-listener",
+        "owner": "styleGrid",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 1047,
+        "selector": "[data-style]",
+        "attribute": "data-style",
+        "action": "selectStyle"
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 61,
+      "id": null,
+      "data": {
+        "data-style": "film"
+      },
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "delegated-data-listener",
+        "owner": "styleGrid",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 1047,
+        "selector": "[data-style]",
+        "attribute": "data-style",
+        "action": "selectStyle"
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 62,
+      "id": null,
+      "data": {
+        "data-style": "muji"
+      },
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "delegated-data-listener",
+        "owner": "styleGrid",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 1047,
+        "selector": "[data-style]",
+        "attribute": "data-style",
+        "action": "selectStyle"
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 78,
+      "id": "submitBtn",
+      "data": {},
+      "type": "submit",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-form-submit",
+        "owner": "journalForm",
+        "event": "submit",
+        "file": "static/app.js",
+        "line": 1049
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 87,
+      "id": "retryJobBtn",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "retryJobBtn",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 1059
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 87,
+      "id": "continueJobBtn",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "continueJobBtn",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 1060
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 97,
+      "id": "undoBtn",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": true,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "undoBtn",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 1054
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 97,
+      "id": "redoBtn",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": true,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "redoBtn",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 1055
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 98,
+      "id": "copyBtn",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "copyBtn",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 1056
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 98,
+      "id": "publishBtn",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": true,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "publishBtn",
+        "event": "click",
+        "file": "static/publish.js",
+        "line": 223
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 98,
+      "id": "exportBtn",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": true,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "exportBtn",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 1057
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 106,
+      "id": "retryPreviewBtn",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "retryPreviewBtn",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 1058
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 120,
+      "id": null,
+      "data": {
+        "data-tone": "literary"
+      },
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "delegated-data-listener",
+        "owner": "regenButtons",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 1061,
+        "selector": "[data-tone]",
+        "attribute": "data-tone",
+        "action": "regenerate"
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 120,
+      "id": null,
+      "data": {
+        "data-tone": "girly"
+      },
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "delegated-data-listener",
+        "owner": "regenButtons",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 1061,
+        "selector": "[data-tone]",
+        "attribute": "data-tone",
+        "action": "regenerate"
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 120,
+      "id": null,
+      "data": {
+        "data-tone": "healing"
+      },
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "delegated-data-listener",
+        "owner": "regenButtons",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 1061,
+        "selector": "[data-tone]",
+        "attribute": "data-tone",
+        "action": "regenerate"
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 120,
+      "id": null,
+      "data": {
+        "data-tone": "moments"
+      },
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "delegated-data-listener",
+        "owner": "regenButtons",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 1061,
+        "selector": "[data-tone]",
+        "attribute": "data-tone",
+        "action": "regenerate"
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 120,
+      "id": null,
+      "data": {
+        "data-tone": "magazine"
+      },
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "delegated-data-listener",
+        "owner": "regenButtons",
+        "event": "click",
+        "file": "static/app.js",
+        "line": 1061,
+        "selector": "[data-tone]",
+        "attribute": "data-tone",
+        "action": "regenerate"
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 129,
+      "id": "publishCloseBtn",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "publishCloseBtn",
+        "event": "click",
+        "file": "static/publish.js",
+        "line": 224
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 138,
+      "id": "publishEditBtn",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "publishEditBtn",
+        "event": "click",
+        "file": "static/publish.js",
+        "line": 226
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 141,
+      "id": "publishSubmitBtn",
+      "data": {},
+      "type": "submit",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-form-submit",
+        "owner": "publishForm",
+        "event": "submit",
+        "file": "static/publish.js",
+        "line": 229
+      }
+    },
+    {
+      "file": "templates/index.html",
+      "line": 144,
+      "id": "publishDoneBtn",
+      "data": {},
+      "type": "button",
+      "initiallyDisabled": false,
+      "proof": {
+        "kind": "external-id-listener",
+        "owner": "publishDoneBtn",
+        "event": "click",
+        "file": "static/publish.js",
+        "line": 225
+      }
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="用照片与真实的旅行感受，制作可以编辑、保存和下载的旅行手帐。">
+  <title>智旅纪 | 把旅程留在纸上</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/app-shell.css">
+  <link rel="stylesheet" href="/static/creator.css">
+  <script src="/static/app-ui.js" defer></script>
+  <script src="/static/creator-theme.js" defer></script>
+  <script src="/static/app.js" defer></script>
+  <script src="/static/publish.js" defer></script>
+</head>
+<body class="creator-page" data-mobile-panel="materials">
+  <a class="skip-link" href="#mainContent">跳到手帐工作台</a>
+  <div class="page-shell creator-shell">
+    <header class="app-header creator-header">
+      <div class="brand-lockup">
+        <span class="brand-mark" aria-hidden="true">ZT</span>
+        <div><h1>智旅纪</h1><p>把旅程留在纸上</p></div>
+      </div>
+      <nav class="site-nav" aria-label="主要导航"><a href="/" class="active" aria-current="page">创作</a><a href="/hall">手帐大厅</a></nav>
+      <div class="creator-header-actions"><div class="draft-tools">
+        <span id="draftStatus" role="status">草稿保存在这台设备</span>
+        <button type="button" class="text-button" id="clearDraftBtn">清空草稿</button>
+      </div><button type="button" id="creatorThemeToggle" class="creator-theme-toggle" aria-label="切换显示主题">外观</button></div>
+    </header>
+
+    <nav class="mobile-tabs" aria-label="工作台区域">
+      <button type="button" id="materialsTab" class="active" aria-controls="materialsPanel" aria-current="true">素材</button>
+      <button type="button" id="workTab" aria-controls="workPanel">作品</button>
+    </nav>
+
+    <div class="error-message" id="errorMsg" role="alert" hidden></div>
+
+    <main class="main-layout" id="mainContent">
+      <section class="panel input-panel" id="materialsPanel" aria-labelledby="materialsHeading">
+        <div class="panel-heading"><h2 id="materialsHeading">从几张照片开始</h2><p>按旅程顺序摆好照片，再写下一点感受。</p></div>
+        <form id="journalForm" novalidate>
+          <label class="visually-hidden" for="imageInput">旅行照片</label>
+          <input type="file" name="image" id="imageInput" class="visually-hidden" accept="image/jpeg,image/png,image/webp" multiple>
+          <button type="button" class="upload-area" id="uploadArea" aria-describedby="uploadHint privacyHint">
+            <span class="upload-icon" aria-hidden="true">＋</span>
+            <span id="uploadText">选择或拖入旅行照片</span>
+            <span class="hint" id="uploadHint">最多 9 张 · 单张 16 MB · 总计 50 MB</span>
+          </button>
+          <p class="privacy-note" id="privacyHint">照片用于内容分析，上传副本会移除定位元数据，7 天后自动清理。</p>
+          <div class="photo-section" id="photoSection" hidden>
+            <div class="section-row"><h3>照片顺序 <span id="photoCount"></span></h3><span class="hint">拖动或用箭头调整</span></div>
+            <div class="preview-grid" id="previewGrid" aria-label="已选择的旅行照片"></div>
+          </div>
+
+          <fieldset class="style-section">
+            <legend>选一种手帐风格</legend>
+            <div class="style-grid" id="styleGrid">
+              <button type="button" class="style-card selected" data-style="xiaohongshu" aria-pressed="true"><span class="creator-style-image"><img src="/api/sample/xiaohongshu" alt="小红书风手帐样张" loading="lazy" decoding="async"></span><span class="style-name">小红书风</span><span class="style-desc">鲜活分享</span></button>
+              <button type="button" class="style-card" data-style="ins" aria-pressed="false"><span class="creator-style-image"><img src="/api/sample/ins" alt="INS 风手帐样张" loading="lazy" decoding="async"></span><span class="style-name">INS 风</span><span class="style-desc">照片主场</span></button>
+              <button type="button" class="style-card" data-style="japanese" aria-pressed="false"><span class="creator-style-image"><img src="/api/sample/japanese" alt="日杂风手帐样张" loading="lazy" decoding="async"></span><span class="style-name">日杂风</span><span class="style-desc">温柔日常</span></button>
+              <button type="button" class="style-card" data-style="film" aria-pressed="false"><span class="creator-style-image"><img src="/api/sample/film" alt="胶片风手帐样张" loading="lazy" decoding="async"></span><span class="style-name">胶片风</span><span class="style-desc">复古故事</span></button>
+              <button type="button" class="style-card" data-style="muji" aria-pressed="false"><span class="creator-style-image"><img src="/api/sample/muji" alt="极简风手帐样张" loading="lazy" decoding="async"></span><span class="style-name">极简风</span><span class="style-desc">留白记录</span></button>
+            </div>
+          </fieldset>
+
+          <details class="form-card" id="supplementaryInfo" open>
+            <summary>补充这段旅程 <span>选填</span></summary>
+            <div class="details-content">
+              <div class="input-row">
+                <div class="input-group"><label for="date">旅行日期</label><input type="date" id="date" name="date"></div>
+                <div class="input-group"><label for="weather">天气状况</label><select id="weather" name="weather"><option value="">未填写</option><option value="晴天☀️">晴天</option><option value="多云⛅">多云</option><option value="阴天☁️">阴天</option><option value="小雨🌧️">小雨</option><option value="大雨⛈️">大雨</option><option value="雪天❄️">雪天</option><option value="雾天🌫️">雾天</option><option value="大风💨">大风</option></select></div>
+              </div>
+              <div class="input-group"><label for="location">游玩地点</label><input type="text" id="location" name="location" maxlength="200" placeholder="如：杭州西湖。以你填写的地点为准"></div>
+              <div class="input-group"><label for="mood">游玩心情</label><input type="text" id="mood" name="mood" maxlength="100" placeholder="如：悠闲、开心、舍不得离开"></div>
+              <div class="input-group"><label for="feelings">旅行感受</label><textarea style="resize:none" id="feelings" name="feelings" rows="3" maxlength="2000" placeholder="写下一件真实发生的小事，或一句想保留的话"></textarea></div>
+            </div>
+          </details>
+          <div class="generate-bar"><button type="submit" class="btn-primary" id="submitBtn"><span id="submitLabel">生成旅行手帐</span><span aria-hidden="true">→</span></button></div>
+        </form>
+      </section>
+
+      <section class="panel output-panel" id="workPanel" aria-labelledby="workHeading">
+        <div class="panel-heading"><h2 id="workHeading">你的旅行手帐</h2><p>改一句文字，留住一段旅程。预览即下载成品。</p></div>
+        <section class="job-status" id="jobStatus" aria-label="手帐生成状态" hidden>
+          <p id="jobMessage" role="status" aria-live="polite">正在准备照片…</p>
+          <ol class="stage-list" aria-label="生成步骤"><li data-stage="upload">准备照片</li><li data-stage="vision">分析照片</li><li data-stage="location">整理地点</li><li data-stage="writing">撰写手帐</li></ol>
+          <div class="status-actions"><button type="button" class="button-secondary" id="retryJobBtn" hidden>重试失败步骤</button><button type="button" class="button-secondary" id="continueJobBtn" hidden>继续查看状态</button></div>
+        </section>
+
+        <div class="empty-state" id="emptyState">
+          <div class="sample-copy"><h3>一段旅程，一页收藏。</h3><p>选好照片后，这里会出现你的手帐。<br>先看看 <span id="sampleStyleName">小红书风</span> 的样子。</p><span class="sample-caption">风格样张</span></div>
+          <img id="samplePreview" class="sample-preview" src="/api/sample/xiaohongshu" alt="小红书风旅行手帐示例">
+        </div>
+
+        <div class="result-content" id="resultContent" hidden>
+          <div class="result-toolbar">
+            <div class="history-buttons"><button type="button" class="button-secondary" id="undoBtn" disabled title="撤销上一次修改">撤销</button><button type="button" class="button-secondary" id="redoBtn" disabled title="重做上一次修改">重做</button></div>
+            <div class="export-buttons"><button type="button" class="button-secondary" id="copyBtn">复制文案</button><button type="button" class="button-secondary publish-open" id="publishBtn" disabled>发布到大厅</button><button type="button" class="btn-primary compact" id="exportBtn" disabled>下载长图</button></div>
+          </div>
+          <div class="warning-message" id="resultWarnings" role="status" hidden></div>
+          <p class="preview-status" id="previewStatus" role="status" aria-live="polite">正在排版成品…</p>
+          <div class="preview-stage" id="previewStage" aria-busy="false">
+            <img id="finishedPreview" class="finished-preview" alt="当前旅行手帐成品，可使用下方编辑区修改" hidden>
+            <div class="preview-placeholder" id="previewPlaceholder">正在把文字与照片排成一页手帐…</div>
+          </div>
+          <button type="button" class="text-button preview-retry" id="retryPreviewBtn" hidden>重新生成预览</button>
+
+          <section class="editor-section" aria-labelledby="editorHeading">
+            <div class="section-row"><h3 id="editorHeading">把文字改成你的语气</h3><span class="hint">修改会自动保存并更新成品</span></div>
+            <div class="input-group"><label for="journalTitle">标题</label><input type="text" id="journalTitle" maxlength="300"></div>
+            <div class="input-group"><label for="journalBody">正文</label><textarea style="resize:none" id="journalBody" rows="8" maxlength="11000" aria-describedby="journalLength"></textarea></div>
+            <p id="journalLength" class="hint journal-length"></p>
+            <div class="input-group"><label for="journalTags">标签</label><input type="text" id="journalTags" maxlength="500" aria-describedby="tagsHint"><span id="tagsHint" class="hint">用空格或逗号分隔，例如：#西湖 #周末旅行</span></div>
+            <details class="result-settings"><summary>调整成品风格与信息</summary><div class="details-content">
+              <div class="input-row"><div class="input-group"><label for="resultStyle">成品风格</label><select id="resultStyle"><option value="xiaohongshu">小红书风</option><option value="ins">INS 风</option><option value="japanese">日杂风</option><option value="film">胶片风</option><option value="muji">极简风</option></select></div><div class="input-group"><label for="resultDate">成品日期</label><input type="date" id="resultDate"></div></div>
+              <div class="input-row"><div class="input-group"><label for="resultWeather">成品天气</label><input type="text" id="resultWeather" maxlength="50" placeholder="如：晴天"></div><div class="input-group"><label for="resultAddress">成品地点</label><input type="text" id="resultAddress" maxlength="300" placeholder="如：杭州西湖"></div></div>
+              <div class="result-photo-section" id="resultPhotoSection" hidden><div class="section-row"><h3>成品照片</h3><span class="hint">调整顺序或移除，可撤销</span></div><div class="preview-grid" id="resultPhotoGrid" aria-label="当前作品的照片"></div></div>
+              <p class="hint">这里的设置只改变当前作品。素材区的设置用于下一次生成。</p>
+            </div></details>
+            <div class="regen-section"><p class="field-label">换一种语气</p><div class="regen-buttons" id="regenButtons"><button type="button" class="btn-regen" data-tone="literary">更文艺</button><button type="button" class="btn-regen" data-tone="girly">更少女</button><button type="button" class="btn-regen" data-tone="healing">更治愈</button><button type="button" class="btn-regen" data-tone="moments">更像朋友圈</button><button type="button" class="btn-regen" data-tone="magazine">更像旅行杂志</button></div><p id="regenStatus" class="hint" role="status" aria-live="polite"></p></div>
+            <details class="photo-metadata" id="metadataDetails" hidden><summary>查看照片时间与地点</summary><ul id="imageMeta"></ul></details>
+          </section>
+        </div>
+      </section>
+    </main>
+    <footer class="app-footer">让记忆有形，让旅程可收藏。</footer>
+  </div>
+  <dialog class="publish-dialog" id="publishDialog" aria-labelledby="publishHeading" aria-describedby="publishIntro">
+    <div class="publish-heading"><div><h2 id="publishHeading">分享这页旅行手帐</h2><p id="publishIntro">发布后，大家可以在手帐大厅看到你的旅程。</p></div><button type="button" class="dialog-close app-icon-button" id="publishCloseBtn" aria-label="关闭发布窗口">×</button></div>
+    <div class="publish-layout">
+      <aside class="publish-preview-column"><img id="publishPreview" alt="即将发布的旅行手帐成品"><p>发布这张成品</p></aside>
+      <form id="publishForm" novalidate>
+        <div class="error-message" id="publishError" role="alert" hidden></div>
+        <div class="input-group"><label for="publishTitle">分享标题</label><input type="text" id="publishTitle" maxlength="100" required autocomplete="off" placeholder="给这页手帐起一个名字"></div>
+        <div class="input-group"><label for="publishCaption">分享说明 <span class="hint">选填</span></label><textarea style="resize:none" id="publishCaption" rows="3" maxlength="2000" placeholder="这段旅程有什么想分享的？"></textarea></div>
+        <div class="input-group"><label for="publishAuthor">发布昵称</label><input type="text" id="publishAuthor" maxlength="30" required autocomplete="nickname" placeholder="你想在大厅显示的名字"></div>
+        <div class="input-group topic-input-group"><label for="publishTopicInput">话题 <span class="hint">选填，最多 5 个</span></label><div class="topic-chips" id="publishTopics" aria-label="已选择的话题"></div><input type="text" id="publishTopicInput" maxlength="120" autocomplete="off" placeholder="如：#城市漫步 #周末旅行" aria-describedby="publishTopicHint publishTopicError"><span class="hint" id="publishTopicHint">输入后按回车、逗号或 # 添加，每个话题最多 20 字。</span><p class="topic-error" id="publishTopicError" role="alert" hidden></p><div class="topic-suggestions" id="publishTopicSuggestions" aria-label="推荐话题"></div></div>
+        <p class="publish-location-note">成品中的照片、文字和地点会随作品一起公开。<button type="button" class="text-button" id="publishEditBtn">返回编辑区调整</button></p>
+        <label class="publish-confirm"><input type="checkbox" id="publishConfirm"><span>公开发布这张手帐及分享信息，所有访客都能看到</span></label>
+        <p class="publish-status" id="publishStatus" role="status" aria-live="polite"></p>
+        <button type="submit" class="btn-primary publish-submit" id="publishSubmitBtn">确认公开发布</button>
+      </form>
+    </div>
+    <div class="publish-success" id="publishSuccess" hidden><h3>已发布</h3><p>这页旅程已出现在手帐大厅，本地草稿也已保留。</p><a class="btn-primary" id="publishedPostLink" href="/hall">查看大厅作品</a><button type="button" class="button-secondary" id="publishDoneBtn">继续创作</button></div>
+  </dialog>
+</body>
+</html>

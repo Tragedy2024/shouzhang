@@ -1,0 +1,91 @@
+@startuml
+skinparam defaultFontName "PingFang SC"
+skinparam shadowing false
+skinparam sequenceMessageAlign center
+autonumber
+title UC03：发布成品到大厅时序图
+actor "创作者／发布者" as User
+boundary "创作页与发布窗口" as UI
+control "Flask 大厅控制器" as API
+control "HallService" as Hall
+entity "JournalStore／SQLite" as Store
+control "长图渲染器" as Renderer
+entity "公开媒体目录" as Media
+
+User -> UI : 点击发布到大厅
+UI -> UI : 确认当前预览匹配\n冻结作品快照，公开确认默认未勾选
+User -> UI : 填写分享标题、说明、昵称与话题\n勾选公开确认，提交
+UI -> UI : 校验字段、生成／复用 UUID\n锁定提交按钮，固定本次 payload
+UI -> API : POST /api/hall/posts\npublic_confirm=true + key + 作品快照
+API -> API : 校验字段并计算规范 payload 的 fingerprint
+alt 公开确认或字段不合法
+  API --> UI : 400，保留发布表单
+else 字段合法
+  API -> Hall : preflight(owner, key, fingerprint)
+  Hall -> Store : 查询同 owner + key；检查当日配额
+  alt 同键同内容且原帖子 active
+    Store --> Hall : 原帖子
+    Hall --> API : existing
+    API --> UI : 200，原帖子与详情链接
+    note over API,Media : 重放不重读私图、不重渲染、不重复占用额度。
+  else 同键异内容或原帖子已撤回
+    Hall --> API : HallError(409)
+    API --> UI : 要求重新确认发布
+  else 当日额度不足
+    Hall --> API : HallError(429)
+    API --> UI : 每日发布上限提示
+  else 可创建新帖子
+    API -> Store : 检查私图仍存在、未过期且属于 owner
+    alt 私图不可访问
+      API --> UI : 403，保留作品与发布信息
+    else 私图有效或纯文字作品
+      API -> Renderer : 按冻结快照生成 1500px PNG
+      Renderer --> API : PNG 或渲染错误
+      alt 渲染成功
+        API -> Hall : publish(owner, key, fingerprint, payload, png)
+        Hall -> Hall : 从 PNG 生成 JPEG 缩略图
+        alt 缩略图有效
+          Hall -> Store : BEGIN IMMEDIATE\n再次检查幂等与配额（防并发）
+          alt 并发请求已创建同键同内容帖子
+            Store --> Hall : 原帖子
+            Hall --> API : existing, created=false
+            API --> UI : 200
+          else 并发检查冲突或额度不足
+            Hall -> Store : ROLLBACK
+            Hall --> API : HallError(409／429)
+            API --> UI : 对应错误，不写入媒体
+          else 本次创建
+            Hall -> Media : 排他写入独立 PNG 与缩略图
+            Hall -> Store : INSERT HallPost(active)\n复用 Topic，保存 PostTopic 顺序
+            alt 全部成功
+              Hall -> Store : COMMIT
+              Hall --> API : post, created=true
+              API --> UI : 201，详情链接
+            else 写文件或存储失败
+              Hall -> Store : ROLLBACK
+              Hall -> Media : 移除本次已创建的媒体文件
+              Hall --> API : 发布错误
+              API --> UI : 500，安全错误提示
+            end
+          end
+        else 缩略图失败
+          Hall --> API : 渲染结果错误
+          API --> UI : 500，不开始发布事务
+        end
+      else 渲染失败
+        API --> UI : 500，不创建公开媒体或帖子
+      end
+    end
+  end
+end
+alt 收到成功结果
+  UI --> User : 显示已发布与查看大厅作品入口
+else 明确失败
+  UI --> User : 保留表单，可修正或重试
+else 超时／响应丢失，结果尚未确认
+  UI --> User : 提示再次确认结果
+  User -> UI : 重试相同发布
+  UI -> API : 相同 payload + 相同 key
+  note over API,Hall : 走同一幂等校验流程；不会创建重复帖子。
+end
+@enduml

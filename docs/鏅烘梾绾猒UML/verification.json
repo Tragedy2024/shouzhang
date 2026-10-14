@@ -1,0 +1,164 @@
+{
+  "date": "2026-10-11",
+  "renderer": "PlantUML 1.2026.8",
+  "local_render": true,
+  "diagram_count": 13,
+  "diagrams": [
+    {
+      "source": "01_use_cases.puml",
+      "category": "用例图",
+      "source_sha256": "e8ea5bb0591cbab88e8a2dec98e8acd8b1fcf2c022b84475347b210fa79c6ddd",
+      "svg": "01_use_cases.svg",
+      "png": "01_use_cases.png",
+      "png_dimensions": [
+        1212,
+        1558
+      ],
+      "syntax_and_render": "passed"
+    },
+    {
+      "source": "02_class_domain.puml",
+      "category": "类图",
+      "source_sha256": "f7f4984c854690259f14fae97280277d951315669b9f781de6c5629fb531e9c9",
+      "svg": "02_class_domain.svg",
+      "png": "02_class_domain.png",
+      "png_dimensions": [
+        2070,
+        1133
+      ],
+      "syntax_and_render": "passed"
+    },
+    {
+      "source": "03_class_creation.puml",
+      "category": "类图",
+      "source_sha256": "5342213d9450164eb7d3eb086ea499845e5599dc2160bcc39fa72520d5ae8ce6",
+      "svg": "03_class_creation.svg",
+      "png": "03_class_creation.png",
+      "png_dimensions": [
+        1405,
+        1281
+      ],
+      "syntax_and_render": "passed"
+    },
+    {
+      "source": "04_class_hall.puml",
+      "category": "类图",
+      "source_sha256": "558a4e308843682ea64b76b85ab07d1252ee5977782ad11e86ae1f39ca26ce62",
+      "svg": "04_class_hall.svg",
+      "png": "04_class_hall.png",
+      "png_dimensions": [
+        1017,
+        1217
+      ],
+      "syntax_and_render": "passed"
+    },
+    {
+      "source": "05_sequence_generate.puml",
+      "category": "时序图",
+      "source_sha256": "419aac5c5435f28ec04fe4528a00e3b27cd9d68c35a0ff3d2d55bbcbbaa74aba",
+      "svg": "05_sequence_generate.svg",
+      "png": "05_sequence_generate.png",
+      "png_dimensions": [
+        1579,
+        2628
+      ],
+      "syntax_and_render": "passed"
+    },
+    {
+      "source": "06_sequence_edit_export.puml",
+      "category": "时序图",
+      "source_sha256": "4697241f2fac9dc35caeb3edba497eef98a134e495ac9868ab1b3567c3a3dafb",
+      "svg": "06_sequence_edit_export.svg",
+      "png": "06_sequence_edit_export.png",
+      "png_dimensions": [
+        1297,
+        1994
+      ],
+      "syntax_and_render": "passed"
+    },
+    {
+      "source": "07_sequence_publish.puml",
+      "category": "时序图",
+      "source_sha256": "ad79248b5aa9cdabd712236b5d14459021110145b452ccd705101ce4c868bf4b",
+      "svg": "07_sequence_publish.svg",
+      "png": "07_sequence_publish.png",
+      "png_dimensions": [
+        1511,
+        2602
+      ],
+      "syntax_and_render": "passed"
+    },
+    {
+      "source": "08_state_job.puml",
+      "category": "状态图",
+      "source_sha256": "09d97707fe853c810dfeb4230be56aa4337753f22269ad3c65c11048d4b2b0e7",
+      "svg": "08_state_job.svg",
+      "png": "08_state_job.png",
+      "png_dimensions": [
+        1556,
+        1064
+      ],
+      "syntax_and_render": "passed"
+    },
+    {
+      "source": "09_state_draft.puml",
+      "category": "状态图",
+      "source_sha256": "5d56a7bc2baadf316e37fefb8656b8fbd9a43e453e1c09d8e4dc979a70dd92db",
+      "svg": "09_state_draft.svg",
+      "png": "09_state_draft.png",
+      "png_dimensions": [
+        2760,
+        1399
+      ],
+      "syntax_and_render": "passed"
+    },
+    {
+      "source": "10_state_post.puml",
+      "category": "状态图",
+      "source_sha256": "a37455daf1dd19ead5d9c95b37414ed84fac6b991fb9fe57425e571b30339bec",
+      "svg": "10_state_post.svg",
+      "png": "10_state_post.png",
+      "png_dimensions": [
+        808,
+        463
+      ],
+      "syntax_and_render": "passed"
+    },
+    {
+      "source": "11_activity_generate.puml",
+      "category": "活动图",
+      "source_sha256": "82b77fb4d42080777f05df90f85ba09297078a87fdc22840b24e980cfc2986cc",
+      "svg": "11_activity_generate.svg",
+      "png": "11_activity_generate.png",
+      "png_dimensions": [
+        2033,
+        2750
+      ],
+      "syntax_and_render": "passed"
+    },
+    {
+      "source": "12_activity_edit_export.puml",
+      "category": "活动图",
+      "source_sha256": "f18566e8a3e845c1587533836ac41266ea8ad2d08c44824c0ca5fc1525c65646",
+      "svg": "12_activity_edit_export.svg",
+      "png": "12_activity_edit_export.png",
+      "png_dimensions": [
+        2197,
+        1879
+      ],
+      "syntax_and_render": "passed"
+    },
+    {
+      "source": "13_activity_publish.puml",
+      "category": "活动图",
+      "source_sha256": "40509990b9889b17ed147a00020157b7cc612c8359ad0a3be3ddf1a6dad09c9f",
+      "svg": "13_activity_publish.svg",
+      "png": "13_activity_publish.png",
+      "png_dimensions": [
+        2895,
+        2426
+      ],
+      "syntax_and_render": "passed"
+    }
+  ]
+}

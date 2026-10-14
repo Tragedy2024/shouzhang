@@ -1,0 +1,31 @@
+frontend_state_check
+PASS: photo append/remove/order/validation; job upload ordering and completion; PNG sections/cache/download; separate form and result styles; text/photo undo-redo; generation/regeneration failure preservation; expired jobs/photos; empty title; draft restore; stale PNG response suppression; failed preview retention/retry; fallback photo identity mismatch; character limit; copy; clear.
+
+
+creator_resilience_check
+PASS: hung database open falls back to text draft and enables real file controls
+PASS: hung database read is aborted and cannot lock photo selection
+PASS: late old draft cannot overwrite new input or newly selected photos
+PASS: an expired HEAD response removes its original photo after the user reorders the result
+PASS: photos selected immediately before pagehide restore in a completely new page VM
+PASS: job polling starts independently of a never-completing draft write
+PASS: timed-out writes cannot commit later or resurrect a cleared draft
+PASS: hidden old poll responses are ignored; resume fetches fresh state and two returns allow change/drop
+PASS: queued and running phases keep observing the same job until completion
+PASS: progress response headers do not cancel the JSON body timeout
+PASS: preview response headers do not cancel the PNG body timeout
+PASS: all creator storage, lifecycle, polling and response-body regressions.
+
+
+hall_state_check
+PASS: initial list/topics; filtering/search/mine; pagination; stale list/detail suppression; list failure retention/retry; detail deep links and history; close focus return; visitor ownership check; withdrawal confirmation/failure/success; withdrawn detail; safe image URLs; real author seals; cover framing; topic counts and filter reset; system/manual/persisted themes without API calls; 300ms search debounce; IME composition; immediate Enter without duplicate; custom clear with refetch and input focus.
+
+
+publish_state_check
+PASS: explicit public confirmation; opening without API; normalized topics and limits; frozen artwork snapshot; errors retain form and key; changed payload renews key; timeout/network Chinese feedback; double click protection; success link and duplicate prevention; nickname preference; field validation; editor return; IME composition; legacy weather limit.
+
+
+app_ui_check
+PASS: shared confirmation Cancel focus, Escape/cancel false, explicit confirm true, duplicate open prevention, trigger focus return; two-scope shared theme key and storage/pageshow/system refresh.
+
+

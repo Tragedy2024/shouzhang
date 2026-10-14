@@ -1,0 +1,94 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName "PingFang SC"
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #F5F8FC
+title 智旅纪：大厅子域类图
+
+class SessionOwner <<概念实体>> {
+  ownerId: UUID
+}
+class HallPost <<持久实体>> {
+  postId: UUID {PK}
+  owner: UUID
+  title: String
+  caption: String
+  authorName: String
+  style: String
+  createdAt: Timestamp
+  status: active_or_withdrawn
+  idempotencyKey: UUID
+  payloadHash: String
+}
+class PublicMedia <<文件值对象>> {
+  filename: String
+  kind: PNG_OR_THUMBNAIL
+  width: Integer
+  height: Integer
+}
+class Topic <<持久实体>> {
+  topicId: Integer {PK}
+  name: String
+  topicKey: String {unique}
+}
+class PostTopic <<关联实体>> {
+  postId: UUID {PK part}
+  topicId: Integer {PK part}
+  position: Integer
+}
+class "发布请求快照" as PublicationPayload <<临时值对象>> {
+  title: String
+  caption: String
+  authorName: String
+  topics: String[]
+  sections: Sections
+  style: String
+  imageFilenames: String[]
+  publicConfirm: Boolean
+}
+class "大厅控制器" as Controller <<控制职责>> {
+  +publish(form)
+  +listPosts(filters)
+  +getPost(postId)
+  +withdraw(postId)
+}
+class HallService <<已有服务类>> {
+  +preflight(owner, key, fingerprint)
+  +publish(owner, key, fingerprint, payload, png)
+  +list_posts(owner, page, page_size, topic, query, mine)
+  +post(postId)
+  +topics()
+  +media(postId, thumbnail)
+  +withdraw(postId, owner)
+}
+class JournalStore <<已有服务类>> {
+  +connect()
+  +photo(filename, owner)
+}
+class "长图渲染器" as Renderer <<服务职责>>
+
+SessionOwner "1" -- "0..*" HallPost : 所有者，昵称仅展示
+HallPost "1" *-- "2" PublicMedia : PNG + JPEG 缩略图
+HallPost "1" *-- "0..5" PostTopic
+PostTopic "0..*" --> "1" Topic
+Controller ..> PublicationPayload : 校验公开确认与字段
+Controller --> HallService
+Controller --> JournalStore : 新发布时校验私图归属
+Controller ..> Renderer : 新发布时生成公开 PNG
+HallService --> JournalStore : 注入存储服务，非组合
+HallService ..> HallPost : 创建／读取／软撤回
+HallService ..> Topic : 规范化复用
+HallService ..> PublicMedia : 保存独立文件
+HallPost ..> PublicationPayload : 创建时读取，不持久关联
+
+note bottom of HallPost
+  unique(owner, idempotencyKey)
+  同键同内容返回原帖子；同键异内容返回 409。
+  北京时间每日最多 20 篇；撤回不返还额度。
+end note
+note bottom of PostTopic
+  unique(postId, topicId)，position 表示话题顺序。
+  HallPost 与 Topic 是多对多关联；Topic 不属于某一帖子。
+end note
+@enduml

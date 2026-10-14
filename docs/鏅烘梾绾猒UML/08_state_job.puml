@@ -1,0 +1,47 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName "PingFang SC"
+skinparam shadowing false
+skinparam stateBackgroundColor #F5F8FC
+title GenerationJob：生成任务对象状态图
+
+state "排队\nstatus=queued" as Queued
+state "运行\nstatus=running" as Running {
+  state Entry <<choice>>
+  state "分析照片\nstage=vision" as Vision
+  state "整理地点\nstage=location" as Location
+  state "撰写手账\nstage=writing" as Writing
+  [*] --> Entry
+  Entry --> Vision : [无 image_description]
+  Entry --> Location : [有描述且无 location_data]
+  Entry --> Writing : [描述与地点结果均存在]
+  Vision --> Location : 分析成功 / 保存描述
+  Location --> Writing : 整理成功 / 保存地点与提示
+}
+state "已完成\nstatus=completed\nstage=done" as Completed
+state "失败\nstatus=failed" as Failed
+
+[*] --> Queued : 素材有效且并发额度允许\n/ 创建任务，stage=upload
+Queued --> Running : 执行器启动 [照片可访问]
+Queued --> Failed : 照片无效 / retryable=false
+Vision --> Failed : 识图错误 / 保存 stage 与 retryable
+Location --> Failed : 未预期异常 / 保存成功数据
+Writing --> Failed : 写作错误 / 保存 stage 与 retryable
+Writing --> Completed : 有效正文 / 保存 result，retryable=false
+Queued --> Failed : 服务恢复发现中断 / retryable=true
+Running --> Failed : 服务恢复发现中断 / retryable=true
+Failed --> Queued : 重试 [owner 匹配且可重试且配额允许]\n/ 清除 error，保留阶段缓存
+Failed --> Failed : 重试 [守卫不满足] / 拒绝请求
+Completed --> [*] : cleanup [创建超过 7 天] / 删除任务记录
+Failed --> [*] : cleanup [创建超过 7 天] / 删除任务记录
+
+note bottom of Running
+  内部节点是 stage；四个外层状态才是持久 status。
+  无 GPS、已手填地点或定位失败不会中止任务。
+  停止前端轮询不会取消正在运行的任务。
+end note
+note bottom of Failed
+  retryable=false 的任务不能直接重试。
+  超期清理是对象销毁，不增加不存在的 expired 状态。
+end note
+@enduml

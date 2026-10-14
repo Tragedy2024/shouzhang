@@ -1,0 +1,74 @@
+@startuml
+skinparam defaultFontName "PingFang SC"
+skinparam shadowing false
+skinparam activityBackgroundColor #F5F8FC
+title UC02：编辑并导出手账活动图
+
+|创作者|
+start
+:打开已生成作品或恢复本机草稿;
+repeat
+  :编辑标题、正文、标签、成品风格或照片顺序，\n也可保留原稿;
+  |浏览器|
+  :按编辑组记录历史，安排本机保存;
+  |创作者|
+  if (选择调整语气？) then (是)
+    |网站后端|
+    :校验原稿、语气与风格;
+    |文字生成服务|
+    :按事实保留约束改写;
+    |浏览器|
+    if (改写成功？) then (是)
+      :保存可撤销的新版本;
+    else (否)
+      :显示错误，保留原稿;
+    endif
+  endif
+  |创作者|
+  if (选择撤销或重做？) then (是)
+    |浏览器|
+    :恢复对应完整作品快照;
+  endif
+  |浏览器|
+  :保存草稿；必要时采用仅文字后备;
+  :版本号递增，中止旧请求，计算当前内容 key;
+  if (当前内容有效且不超过 12000 字？) then (是)
+    if (已有匹配 key 的 PNG？) then (是)
+      :直接展示缓存成品;
+    else (否)
+      :等待 700ms 防抖或立即重试;
+      :冻结 snapshot、version、key，提交排版;
+      |网站后端|
+      :校验 sections、风格、scale 和私图所有权;
+      if (参数与私图有效？) then (是)
+        :依据结构化内容渲染 PNG;
+        |浏览器|
+        if (返回有效 PNG？) then (是)
+          if (本次请求版本与快照 key 仍匹配当前作品？) then (是)
+            :替换缓存与成品预览;
+          else (否)
+            :丢弃过期响应，等待当前版本;
+          endif
+        else (否)
+          :保留文字与旧图，显示重试提示;
+        endif
+      else (否)
+        |浏览器|
+        :显示校验错误；过期照片可移除，正文保留;
+      endif
+    endif
+  else (否)
+    :显示空内容或长度问题，禁用下载;
+  endif
+  |创作者|
+repeat while (继续修改或重试排版？) is (是)
+
+|浏览器|
+if (当前预览 key 匹配作品且用户点击下载？) then (是)
+  :读取预览缓存的同一个 PNG Blob;
+  :浏览器保存长图，不再调用导出 API;
+else (否)
+  :保留本机草稿；未匹配时不可下载旧成品;
+endif
+stop
+@enduml

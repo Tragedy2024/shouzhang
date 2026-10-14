@@ -1,0 +1,24 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName "PingFang SC"
+skinparam shadowing false
+skinparam stateBackgroundColor #F5F8FC
+title HallPost：大厅帖子对象状态图
+
+state "公开展示\nstatus=active" as Active
+state "已撤回\nstatus=withdrawn" as Withdrawn
+[*] --> Active : 发布事务提交成功\n[公开确认、字段、私图、配额校验通过]
+Active --> Active : 同 owner + key + 同内容重放\n/ 返回原帖子，不重复创建
+Active --> Active : 浏览、查看详情或加载媒体\n/ 返回公开快照
+Active --> Withdrawn : 撤回 [请求 owner=帖子 owner]\n/ 更新 status，保留记录、媒体和话题关系
+Active --> Active : 撤回 [owner 不匹配] / 返回 403
+Withdrawn --> Withdrawn : 所有者重复撤回 / 返回成功
+Withdrawn --> Withdrawn : 同旧 key 重新发布 / 返回 409
+Withdrawn --> Withdrawn : 请求列表、详情或图片\n/ 列表排除，详情与媒体返回 404
+
+note bottom of Withdrawn
+  撤回不是对象销毁，因此不连接终止伪状态。
+  当前没有恢复／永久删除／审核中的状态。
+  再发布需重新确认并使用新 key，产生另一个 HallPost。
+end note
+@enduml

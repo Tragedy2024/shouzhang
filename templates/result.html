@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅行手账 - 结果</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>智能旅行手账</h1>
+        </header>
+
+        <div class="result-layout">
+            <div class="image-section">
+                {% if image_urls %}
+                    {% if image_urls|length == 1 %}
+                    <img src="{{ image_urls[0] }}" alt="上传的照片" class="uploaded-image">
+                    {% else %}
+                    <div class="result-image-grid">
+                        {% for path in image_urls %}
+                        <img src="{{ path }}" alt="照片{{ loop.index }}" class="uploaded-image">
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endif %}
+
+                {% if address %}
+                <div class="location-info">
+                    <span class="label">拍摄地点</span>
+                    <span>{{ address }}</span>
+                </div>
+                {% endif %}
+                {% if datetime_str %}
+                <div class="location-info">
+                    <span class="label">拍摄时间</span>
+                    <span>{{ datetime_str }}</span>
+                </div>
+                {% endif %}
+                {% if gps %}
+                <div class="location-info">
+                    <span class="label">GPS坐标</span>
+                    <span>{{ gps[0]|round(4) }}, {{ gps[1]|round(4) }}</span>
+                </div>
+                {% endif %}
+                {% if attractions %}
+                <div class="attractions-section">
+                    <h3>附近景点</h3>
+                    <ul>
+                    {% for a in attractions %}
+                        <li>{{ a.name }} <span class="attraction-addr">{{ a.address }}</span></li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="journal-section">
+                <div class="journal-card">
+                    <div class="journal-content" style="white-space: pre-wrap">{{ journal }}</div>
+                </div>
+                <a href="/" class="btn-back">上传新照片</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

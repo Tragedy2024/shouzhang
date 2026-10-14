@@ -1,0 +1,296 @@
+{
+  "schemaVersion": 1,
+  "ownershipModel": "B",
+  "canonicalStylesheet": "static/app-shell.css",
+  "pageAdapters": [
+    "static/creator.css",
+    "static/hall.css"
+  ],
+  "legacyGeometryStylesheet": "static/style.css",
+  "selectors": {
+    ":root": {
+      "--app-bg": "#f3f5f6",
+      "--app-surface": "#ffffff",
+      "--app-surface-soft": "#eef1f3",
+      "--app-paper": "#ffffff",
+      "--app-ink": "#253038",
+      "--app-muted": "#5e6c76",
+      "--app-faint": "#64717c",
+      "--app-line": "#dde3e7",
+      "--app-control-line": "#8596a2",
+      "--app-accent": "#b83f46",
+      "--app-accent-hover": "#a2363d",
+      "--app-accent-soft": "#fbebed",
+      "--app-accent-line": "#e9bfc3",
+      "--app-button": "#b83f46",
+      "--app-button-hover": "#a2363d",
+      "--app-on-button": "#ffffff",
+      "--app-focus": "#b83f46",
+      "--app-warning-bg": "#fff7e7",
+      "--app-warning-ink": "#735019",
+      "--app-warning-line": "#e1c78f",
+      "--app-backdrop": "rgb(20 28 35 / .58)",
+      "--app-shadow": "0 8px 28px rgb(24 38 48 / .06)",
+      "--app-dialog-shadow": "0 24px 80px rgb(24 38 48 / .2)",
+      "--app-font-body": "\"PingFang SC\", \"Noto Sans SC\", \"Microsoft YaHei\", sans-serif",
+      "--app-font-display": "ui-serif, \"Songti SC\", \"Noto Serif SC\", serif",
+      "--app-radius-control": "10px",
+      "--app-radius-card": "20px",
+      "--app-layer-sticky": "100",
+      "--app-layer-dialog": "600"
+    },
+    ":root[data-creator-theme=\"dark\"], :root[data-hall-theme=\"dark\"]": {
+      "--app-bg": "#171e23",
+      "--app-surface": "#20292f",
+      "--app-surface-soft": "#29343c",
+      "--app-ink": "#f1f4f6",
+      "--app-muted": "#b6c1c9",
+      "--app-faint": "#a4b2bd",
+      "--app-line": "#3b4852",
+      "--app-control-line": "#6d7d89",
+      "--app-accent": "#f1a5ab",
+      "--app-accent-hover": "#ffc0c5",
+      "--app-accent-soft": "#3e2d34",
+      "--app-accent-line": "#79535b",
+      "--app-button": "#ad3b43",
+      "--app-button-hover": "#992e36",
+      "--app-focus": "#f1a5ab",
+      "--app-warning-bg": "#3a3222",
+      "--app-warning-ink": "#f0d6a2",
+      "--app-warning-line": "#79633e",
+      "--app-shadow": "0 8px 28px rgb(0 0 0 / .16)",
+      "--app-dialog-shadow": "0 24px 80px rgb(0 0 0 / .4)"
+    }
+  },
+  "designMirrors": [
+    {
+      "selector": ":root",
+      "token": "--app-bg",
+      "designPath": "colors.bgLight"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-surface",
+      "designPath": "colors.surfaceLight"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-surface-soft",
+      "designPath": "colors.surfaceSoftLight"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-paper",
+      "designPath": "colors.paperLight"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-ink",
+      "designPath": "colors.inkLight"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-muted",
+      "designPath": "colors.mutedLight"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-faint",
+      "designPath": "colors.faintLight"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-line",
+      "designPath": "colors.lineLight"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-control-line",
+      "designPath": "colors.controlLineLight"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-accent",
+      "designPath": "colors.accentLight"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-accent-hover",
+      "designPath": "colors.accentHoverLight"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-accent-soft",
+      "designPath": "colors.accentSoftLight"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-accent-line",
+      "designPath": "colors.accentLineLight"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-button",
+      "designPath": "colors.primary"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-button-hover",
+      "designPath": "colors.buttonHoverLight"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-on-button",
+      "designPath": "colors.onButtonLight"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-focus",
+      "designPath": "colors.focusLight"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-warning-bg",
+      "designPath": "colors.warningBgLight"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-warning-ink",
+      "designPath": "colors.warningInkLight"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-warning-line",
+      "designPath": "colors.warningLineLight"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-backdrop",
+      "designPath": "colors.backdropLight"
+    },
+    {
+      "selector": ":root[data-creator-theme=\"dark\"], :root[data-hall-theme=\"dark\"]",
+      "token": "--app-bg",
+      "designPath": "colors.bgDark"
+    },
+    {
+      "selector": ":root[data-creator-theme=\"dark\"], :root[data-hall-theme=\"dark\"]",
+      "token": "--app-surface",
+      "designPath": "colors.surfaceDark"
+    },
+    {
+      "selector": ":root[data-creator-theme=\"dark\"], :root[data-hall-theme=\"dark\"]",
+      "token": "--app-surface-soft",
+      "designPath": "colors.surfaceSoftDark"
+    },
+    {
+      "selector": ":root[data-creator-theme=\"dark\"], :root[data-hall-theme=\"dark\"]",
+      "token": "--app-ink",
+      "designPath": "colors.inkDark"
+    },
+    {
+      "selector": ":root[data-creator-theme=\"dark\"], :root[data-hall-theme=\"dark\"]",
+      "token": "--app-muted",
+      "designPath": "colors.mutedDark"
+    },
+    {
+      "selector": ":root[data-creator-theme=\"dark\"], :root[data-hall-theme=\"dark\"]",
+      "token": "--app-faint",
+      "designPath": "colors.faintDark"
+    },
+    {
+      "selector": ":root[data-creator-theme=\"dark\"], :root[data-hall-theme=\"dark\"]",
+      "token": "--app-line",
+      "designPath": "colors.lineDark"
+    },
+    {
+      "selector": ":root[data-creator-theme=\"dark\"], :root[data-hall-theme=\"dark\"]",
+      "token": "--app-control-line",
+      "designPath": "colors.controlLineDark"
+    },
+    {
+      "selector": ":root[data-creator-theme=\"dark\"], :root[data-hall-theme=\"dark\"]",
+      "token": "--app-accent",
+      "designPath": "colors.accentDark"
+    },
+    {
+      "selector": ":root[data-creator-theme=\"dark\"], :root[data-hall-theme=\"dark\"]",
+      "token": "--app-accent-hover",
+      "designPath": "colors.accentHoverDark"
+    },
+    {
+      "selector": ":root[data-creator-theme=\"dark\"], :root[data-hall-theme=\"dark\"]",
+      "token": "--app-accent-soft",
+      "designPath": "colors.accentSoftDark"
+    },
+    {
+      "selector": ":root[data-creator-theme=\"dark\"], :root[data-hall-theme=\"dark\"]",
+      "token": "--app-accent-line",
+      "designPath": "colors.accentLineDark"
+    },
+    {
+      "selector": ":root[data-creator-theme=\"dark\"], :root[data-hall-theme=\"dark\"]",
+      "token": "--app-button",
+      "designPath": "colors.buttonDark"
+    },
+    {
+      "selector": ":root[data-creator-theme=\"dark\"], :root[data-hall-theme=\"dark\"]",
+      "token": "--app-button-hover",
+      "designPath": "colors.buttonHoverDark"
+    },
+    {
+      "selector": ":root[data-creator-theme=\"dark\"], :root[data-hall-theme=\"dark\"]",
+      "token": "--app-focus",
+      "designPath": "colors.focusDark"
+    },
+    {
+      "selector": ":root[data-creator-theme=\"dark\"], :root[data-hall-theme=\"dark\"]",
+      "token": "--app-warning-bg",
+      "designPath": "colors.warningBgDark"
+    },
+    {
+      "selector": ":root[data-creator-theme=\"dark\"], :root[data-hall-theme=\"dark\"]",
+      "token": "--app-warning-ink",
+      "designPath": "colors.warningInkDark"
+    },
+    {
+      "selector": ":root[data-creator-theme=\"dark\"], :root[data-hall-theme=\"dark\"]",
+      "token": "--app-warning-line",
+      "designPath": "colors.warningLineDark"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-font-body",
+      "designPath": "typography.sans.fontFamily"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-font-display",
+      "designPath": "typography.display.fontFamily"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-radius-control",
+      "designPath": "rounded.control"
+    },
+    {
+      "selector": ":root",
+      "token": "--app-radius-card",
+      "designPath": "rounded.card"
+    }
+  ],
+  "semantics": "Color mirror names use Light/Dark suffixes; dark inherits root tokens not explicitly overridden. All --app-* declarations are checked against this snapshot. Feature aliases point to canonical tokens.",
+  "componentConsumers": {
+    "page/panel": "body.creator-page, body.hall-page; .panel; .hall-main",
+    "field": ".input-group input/select/textarea; .publish-field; placeholders",
+    "primary-button": ".btn-primary, .publish-primary, .app-confirm-primary",
+    "secondary-button": ".button-secondary, .btn-secondary, .hall-secondary",
+    "accent-link": ".site-nav a:hover; .text-button hover; .hall-text-button hover",
+    "accent-status": ".error-message, .hall-error, topic chips and selected topics",
+    "warning-status": ".warning-message",
+    "dialog": "dialog::backdrop; .publish-dialog, .hall-detail, .app-confirm-dialog",
+    "scrollbar": "global standards + WebKit scrollbar rules",
+    "paper-preview": ".sample-preview, .finished-preview, .hall-detail-paper img",
+    "paint roles": "Existing border/outline/divider paint in CSS; documented as backgroundColor-only paint recipes because official DESIGN.md v0.4.0 has no borderColor/focusColor sub-token. No new DOM or visual feature is implied."
+  }
+}

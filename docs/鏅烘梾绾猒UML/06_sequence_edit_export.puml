@@ -1,0 +1,72 @@
+@startuml
+skinparam defaultFontName "PingFang SC"
+skinparam shadowing false
+skinparam sequenceMessageAlign center
+autonumber
+title UC02：编辑并导出手账时序图
+actor "创作者" as User
+boundary "创作页面" as UI
+entity "LocalDraft／编辑历史" as Draft
+control "Flask 导出控制器" as API
+entity "JournalStore" as Store
+participant "文字生成服务" as Text
+control "长图渲染器" as Renderer
+entity "当前 PNG 缓存" as Cache
+
+User -> UI : 修改标题、正文、标签或成品设置
+UI -> Draft : 提交编辑组，记录快照\n清空重做栈，安排本机保存
+opt 用户选择调整语气
+  UI -> API : POST /api/regenerate（原稿、语气、风格）
+  API -> Text : 改写请求 + 保留原稿事实的约束
+  Text --> API : 改写结果或错误
+  alt 成功
+    API --> UI : 新正文与 sections
+    UI -> Draft : 保存可撤销的新版本
+  else 失败
+    API --> UI : 安全错误提示
+    UI -> UI : 保留原稿与编辑历史
+  end
+end
+opt 用户撤销／重做
+  User -> UI : 选择撤销／重做
+  UI -> Draft : 在当前、history、future 间交换快照
+  Draft --> UI : 恢复内容、照片顺序与元信息
+end
+UI -> UI : revision++，取消旧排版请求\n计算内容 key，防抖 700ms
+UI -> Cache : 查找与当前 key 一致的缓存
+alt 当前缓存匹配
+  Cache --> UI : 当前 PNG Blob
+else 需要重新排版
+  UI -> UI : 冻结本次 snapshot 与 revision
+  UI -> API : POST /api/export-image\nsections、照片名、风格、元信息、scale=2
+  API -> API : 校验结构、内容长度、风格与 scale
+  API -> Store : 检查每张照片的 owner 与保留期
+  alt 参数或照片无效
+    API --> UI : 400（保留文字，可移除失效照片）
+  else 校验通过
+    API -> Renderer : render_journal_to_bytes(snapshot, paths)
+    Renderer --> API : PNG 或渲染错误
+    alt 渲染成功
+      API --> UI : image/png
+      alt 本次请求捕获的 revision 与 key 仍匹配当前内容
+        UI -> Cache : 替换 Blob／URL／key
+        UI -> UI : 显示匹配预览，启用下载
+      else 内容已变化，响应过期
+        UI -> UI : 丢弃旧响应，保留最新排版流程
+      end
+    else 渲染失败
+      API --> UI : 500，安全错误提示
+    end
+  end
+end
+alt 存在与当前作品一致的 PNG
+  User -> UI : 点击下载长图
+  UI -> Cache : 读取已显示的同一个 PNG Blob
+  Cache --> UI : Object URL
+  UI --> User : 浏览器保存 PNG
+  note over UI,API : 点击下载直接使用缓存，不再次请求导出接口。
+else 当前预览未就绪
+  UI --> User : 下载禁用；可以编辑或重试排版
+end
+note over Draft : IndexedDB 保存完整草稿与 Blob；失败时尝试文字后备。
+@enduml
